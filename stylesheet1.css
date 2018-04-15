@@ -1,0 +1,311 @@
+body
+{
+    font-family:"Candara";
+    background-image: url("https://www.brillen-sehhilfen.de/optik/image/weiss-white.png") ;
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+    background-size: cover;
+    margin:0px;
+}
+nav
+{
+    background-color: lawngreen;
+    position: absolute;
+    top: 100px;
+    left: 0;
+    width: 15%;
+    height: 100%;
+    overflow: hidden;
+}
+nav ul{
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+
+
+}
+
+nav ul li a:hover
+{
+    background-color: dimgray;
+    animation-name: hoveranimation2;
+    animation-duration: 800ms;
+    color: lawngreen;
+}
+nav ul li a
+{
+    text-decoration: none;
+    color: black;
+    display: block;
+    text-align: center;
+    padding: 50px 50px;
+}
+#topbar
+{
+    background-color: white;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    border-bottom: 2px solid lawngreen;
+    overflow: hidden;
+}
+#topbar ul{
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+#topbar ul li
+{
+    float: left;
+}
+#topbar ul li a:hover
+{
+    background-color: dimgray;
+    animation-name: hoveranimation3;
+    animation-duration: 800ms;
+    color: lawngreen;
+}
+.active
+{
+    background-color: lawngreen;
+    text-decoration: none;
+    color: black;
+    display: block;
+    text-align: center;
+    padding: 39px 50px;
+}
+.active:hover{
+    background-color: dimgray;
+    animation-name: hoveranimation2;
+    animation-duration: 800ms;
+    color: lawngreen;
+}
+.topbardropdown
+{
+    text-decoration: none;
+    color: black;
+    display: block;
+    text-align: center;
+    padding: 39px 50px;
+}
+#topbarlogo
+{
+    display: block;
+    padding-left: 32px;
+    padding-right: 31px;
+    padding-top: 5px;
+    padding-bottom: 4px;
+    margin: 0;
+}
+#backgroundcontainer
+{
+    float: right;
+    display: flex;
+    flex-direction: row;
+    width: 85%;
+    justify-content: space-around;
+    margin-top: 30px;
+}
+.box
+{
+    height:auto;
+    width: 250px;
+    padding-left: 15px;
+}
+.boxcenter
+{
+    height: auto ;
+    min-height: 300px;
+    width: 70%;
+    background-color: rgba(19, 255, 6, 0.51);
+    padding: 30px;
+}
+.blogpost
+{
+    padding: 15px;
+    border: 3px solid #2e2e2e;
+    margin: 20px;
+    border-radius: 10px;
+}
+a img
+{
+    top: 0px;
+    margin: 0px;
+
+}
+#bearbeiten
+{
+    text-decoration: none;
+    color: #2e2e2e;
+    background-color: lawngreen;
+    padding: 5px;
+    margin:2px;
+}
+#bearbeiten:hover
+{
+    background-color: #a6bfed;
+}
+/*  textarea
+  {
+      padding: 5px;
+      height: auto;
+      min-height: 200px;
+      border-radius: 5px;
+      border: 2px solid #2e2e2e;
+      width: 90%;
+      resize: none;
+      word-break: normal;
+      box-sizing: border-box;
+      font-family: Candara;
+  }*/
+
+.loginform
+{
+    width: 20%;
+    margin: 150px;
+    padding:40px;
+
+}
+input:hover
+{
+    box-shadow: 0px 0px 7px lawngreen;
+}
+input:focus
+{
+    box-shadow: 0px 0px 7px lawngreen;
+    background-color: rgba(124, 252, 0, 0.51);
+}
+.oben {
+    font-size: larger;
+}
+input[type=text]
+{
+    padding: 5px;
+    height: 30px;
+    background-color: rgba(105, 105, 105, 0.05);
+    border: none;
+    width: 95%;
+    font-family: Candara;
+    text-align: center;
+}
+input[type=submit]
+{
+    background-color: dimgray;
+    border: none;
+    color: lawngreen;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+}
+#kontakt1
+{
+    float: left;
+    padding: 30px;
+}
+#kontakt2
+{
+    float: right;
+    padding: 30px;
+}
+input[type=password]
+{
+    background-color: rgba(105, 105, 105, 0.05);
+    border: none;
+    padding: 5px;
+    height: 30px;
+    width: 95%;
+    font-size: larger;
+    text-align: center;
+}
+@keyframes hoveranimation {
+    from {background-color: white;}
+    to {background-color: lawngreen;}
+    from {color:black;}
+    to {color: lawngreen;}
+}
+@keyframes hoveranimation2 {
+    from {background-color: lawngreen;}
+    to {background-color: dimgrey;}
+    from {color:black;}
+    to {color: lawngreen;}
+}
+@keyframes hoveranimation3 {
+    from {background-color: white;}
+    to {background-color: dimgray;}
+    from {color:black;}
+    to {color: lawngreen;}
+}
+#footer
+{
+    width: 85%;
+    float:right;
+    background-color: dimgray;
+    margin-top: 20px;
+    height: 150px;
+    color: lawngreen;
+    padding: 10px;
+    text-align: center;
+}
+#fa fa-copyright
+{
+    color: lawngreen;
+}
+#footercontainer
+{
+    display: flex;
+    flex-direction: row;
+    width: 50%;
+    justify-content: space-around;
+    margin: auto;
+    margin-top: 10px;
+    margin-bottom: 30px;
+}
+.footerbox
+{
+    height:auto;
+    width: auto;
+}
+.footerbox a
+{
+    text-decoration: none;
+    color: #8b8b8b;
+}
+.footerbox a:hover
+{
+    color: white;
+}
+#footer a
+{
+    text-decoration: none;
+    color: #8b8b8b;
+}
+#footer a:hover
+{
+    color: white;
+}
+.content {
+    padding: 16px;
+}
+.sticky {
+    position: fixed;
+    top: 0;
+}
+.sticky + .content {
+    padding-top: 60px;
+}
+th{
+    background-color: #2e2e2e;
+    color: white;
+    border: 2px cornflowerblue;
+}
+#zwischenzeile{
+    background-color: cornflowerblue;
+}
+table{
+    width:90%;
+    text-align: center;
+    margin: auto;
+}
