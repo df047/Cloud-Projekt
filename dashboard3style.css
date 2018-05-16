@@ -1,0 +1,79 @@
+@import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
+
+body {
+    font-family: 'Poppins', sans-serif;
+    padding-top: 50px;
+}
+
+.wrapper {
+    display: flex;
+}
+
+#sidebar {
+    background: #47748b;
+    width: 20%;
+    color: #FFFFFF;
+    height: 100vh;
+    position: fixed;
+}
+a, a:hover {
+    text-decoration: none;
+    color: inherit;
+}
+
+#sidebar .sidebar-header {
+    padding: 10px;
+    background: #3e677c;
+}
+
+#sidebar ul li a {
+    padding: 10px;
+    display: block;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+#sidebar ul li a:hover {
+    color: #47748b;
+    background: #fff;
+}
+#sidebar ul li.active {
+    color: #fff;
+    background: #4f839e;
+}
+
+.navbar-brand{
+    padding: 7px;
+    padding-left: 20px;
+}
+.logo {
+    max-width: 200px;
+}
+
+.navbar {
+    background-color: #47748b;
+}
+
+.nav.navbar-nav.navbar-right li a{
+color: #FFFFFF;
+}
+
+.nav.navbar-nav.navbar-right li a:hover {
+    background-color: #FFFFFF;
+    color: #47748b;
+}
+#upload {
+    background-color: #4f839e;
+    font-size: 14px;
+    padding: 15px 55px;
+}
+
+#upload:hover {
+    color:#4f839e;
+    background: #FFFFFF;
+}
+
+#content {
+    position: absolute;
+    margin-left: 20%;
+}
