@@ -14,6 +14,7 @@ function random_string() {
  $bytes = mcrypt_create_iv(16, MCRYPT_DEV_URANDOM);
  $str = bin2hex($bytes);
  } else {
+
  //Bitte euer_geheim_string durch einen zufälligen String mit >12 Zeichen austauschen
  $str = md5(uniqid('euer_geheimer_string', true));
  }
@@ -34,7 +35,10 @@ if(isset($_GET['send']) ) {
  if($user === false) {
  $error = "<b>Kein Benutzer gefunden</b>";
  } else {
+
+
  //Überprüfe, ob der User schon einen Passwortcode hat oder ob dieser abgelaufen ist
+
  $passwortcode = random_string();
  $statement = $pdo->prepare("UPDATE users SET passwortcode = :passwortcode, passwortcode_time = NOW() WHERE id = :userid");
  $result = $statement->execute(array('passwortcode' => sha1($passwortcode), 'userid' => $user['id']));
@@ -44,13 +48,13 @@ if(isset($_GET['send']) ) {
  $from = "From: Vorname Nachname <absender@domain.de>"; //Ersetzt hier euren Name und E-Mail-Adresse
  $url_passwortcode = 'http://localhost/passwortzuruecksetzen.php?userid='.$user['id'].'&code='.$passwortcode; //Setzt hier eure richtige Domain ein
  $text = 'Hallo '.$user['vorname'].',
-für deinen Account auf www.php-einfach.de wurde nach einem neuen Passwort gefragt. Um ein neues Passwort zu vergeben, rufe innerhalb der nächsten 24 Stunden die folgende Website auf:
+für deinen Account auf www.thunderstorm.de wurde nach einem neuen Passwort gefragt. Um ein neues Passwort zu vergeben, rufe innerhalb der nächsten 24 Stunden die folgende Website auf:
 '.$url_passwortcode.'
  
 Sollte dir dein Passwort wieder eingefallen sein oder hast du dies nicht angefordert, so bitte ignoriere diese E-Mail.
  
 Viele Grüße,
-dein PHP-Einfach.de-Team';
+dein Thunderstorm-Team';
 
  mail($empfaenger, $betreff, $text, $from);
 
@@ -79,7 +83,7 @@ E-Mail:<br>
 </form>
 
 <?php
-endif; //Endif von if($showForm)
+endif;
 ?>
 
 
