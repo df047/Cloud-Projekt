@@ -4,7 +4,7 @@
 }
 
 .navbar {
-    background-color:#e2e2e2 ;
+    background-color:rgba(224, 224, 224);
     padding: 1% 0;
     font-size: 1.2em;
 }
@@ -26,7 +26,7 @@
 }
 
 #home {
-    background: url(bilder/mountains.jpeg) no-repeat center center fixed;
+    background: url(bilder/Startbild.jpg) no-repeat center center fixed;
     display: table;
     height: 100%;
     position: relative;
@@ -50,7 +50,7 @@
 }
 
 #fixed {
-    background: url(bilder/background.jpg) no-repeat center center fixed;
+    background: url("bilder/desk-3139127_1920.jpg")no-repeat center center fixed;
     display: table;
     height: 60%;
     position: relative;
@@ -58,9 +58,10 @@
     background-size: cover;
 }
 
+
 footer {
     width: 100%;
-    background-color: #e2e2e2;
+    background-color: #e0e0e0;
     padding:3% 5% 3% 5%;
     color: #000000;
 ;
@@ -81,7 +82,7 @@ footer {
 }
 
 .wrapper {
-    margin-top: 15%;
+    margin-top: 180px;
     margin-bottom: 20px;
 }
 
@@ -89,7 +90,7 @@ footer {
     max-width: 420px;
     padding: 30px 38px 66px;
     margin: 0 auto;
-    background-color: #e2e2e2;
+    background-color: rgba(224, 224, 224, 0.7);
 }
 
 .form-signin-heading {
@@ -115,3 +116,17 @@ input[type="password"] {
     border-top-left-radius: 0;
     border-top-right-radius: 0;
 }
+ #loginbutton {
+     margin: 10px;
+ }
+
+ #loginimage {
+     max-width: 25%;
+     margin-left: 35%;
+ }
+
+ #logintext {
+     margin-left: 16%;
+     color: rgba(80,80,80,1);
+     font-style: italic;
+ }
