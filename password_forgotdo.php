@@ -1,6 +1,6 @@
 <?php
 
-// Random String ersstellen
+// Hier wird ein Random String ersstellt
 
 function random_string() {
     if(function_exists('random_bytes')) {
@@ -27,6 +27,7 @@ session_start();
 
 }
 
+// Datenbankverbindung
 
 require_once "logindaten.php";
 
@@ -43,35 +44,32 @@ catch (PDOException $p) {
 
 try {
 
-    $stmt = $con->prepare("SELECT * FROM users WHERE e_mail = :e_mail"); // Datenbankabfrage vorbereiten und in $stmt abspeichern
+    $stmt = $db->prepare("SELECT * FROM users WHERE e_mail = :e_mail");  // Datenbankabfrage Verbereitung wird in $stmt gespeichert
     $stmt->bindParam(':e_mail', $e_mail);
-    $stmt->execute(); // Abfrage ausführen
-    $row = $stmt->fetch(PDO::FETCH_ASSOC); // Ergebnis der Abfrage in Array speichern
-}
+    $stmt->execute(); // Abfrage wird ausführen
+    $row = $stmt->fetch(PDO::FETCH_ASSOC); // Ergebnisabfrage wird in einem Array abgespeichert
 
-catch(PDOException $e) {             // Standard
+
+catch(PDOException $e) {
     echo "Fehler: ". $e->getMessage();
 }
 
-// Check Nr.1: Ist E-Mail-Adresse in der Datenbank hinterlegt?
-
-//echo $row['e_mail'];
-//echo $row['user_id'];
+// 1. Test: Befindet sich die E-Mail Adresse in der Datenbank?
 
 if(count($row)==0) {
-    echo "Die E-Mail Adresse ist nicht hinterlegt";
+    echo "Ihre E-Mail Adresse ist nicht hinterlegt";
 } else {
     $passwortcode=random_string();
-    $stmt = $con->prepare("UPDATE users SET passwortcode=:passwortcode, passwortcode_time=NOW() WHERE id=:user_id");
+    $stmt = $db->prepare("UPDATE users SET passwortcode=:passwortcode, passwortcode_time=NOW() WHERE id=:user_id");
     $result= $stmt->execute(array('passwortcode'=> sha1($passwortcode),'user_id'=>$row['id']));
 
-    //E-Mail für Empfänger, der das Passwort vergessen hat wird vorbereitet
+    //E-Mail für Benutzer, der das Passwort vergessen hat
     $empfaenger=$row['e_mail'];
     $absender="From: Thunderstorm GmbH <info.thunderstorm@mail.de>";
     $betreff="Setzen Sie Ihr Passwort zurück";
     $url_passwortcode="https://mars.iuk.hdm-stuttgart.de/~df047/formpassword_renew.php?userid=".$row['id']."&code=".$passwortcode;
-    $text="Hallo".$row['vorname'];.$row['nachname'] "
-    Es wurde eine Änderung des Konnworts Ihres Thunderstorm-Kontos angefordert. Wenn Sie das waren, können Sie Ihr Passwort hier in der nächsten Stunde neu festlegen:"
+    $text="Hallo".$row['vorname'].$row['nachname'].",".
+    "Es wurde eine Änderung des Kennworts Ihres Thunderstorm-Kontos angefordert. Wenn Sie das waren, können Sie Ihr Passwort hier in der nächsten Stunde neu festlegen:"
         .$url_passwortcode;
     mail($empfaenger,$betreff,$text,$absender);
     echo "Ein Link wurde soeben an die von Ihnen angegebene E-Mail-Adresse versendet";
