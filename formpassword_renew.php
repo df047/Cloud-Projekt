@@ -1,6 +1,9 @@
 <?php
 require_once "logindaten.php";
 
+
+// Datenbankverbindung
+
 try
 {
     $db= new PDO ($dsn,$dbuser,$dbpass);
@@ -9,33 +12,36 @@ catch (PDOException $p) {
     echo("Fehler bei Aufbau der Datenbankverbindung.");
 }
 
-// Überprüfung, ob user_id und passwortcode übergeben wurde
+// Hier wird zunächst überprüft, ob die user_id und passwortcode übergeben wurde
 $user_id=$_GET['userid'];
 $passwortcode=$_GET['code'];
 
-//Überprüfung, ob Link zum Passwort zurücksetzten einen Inhalt in user_id und in passwortcode haben - die() beendet die Skriptausführung
+//Hier wird überprüft, ob der Link zum zurücksetzten des Passworts Inhalt in user_id und in passwortcode hat
 
 if($user_id === NULL || $passwortcode=== NULL){
     echo "Nutzer hat kein Passwortcode angefordert";
     die();
 }
 
-// Nur Abfrage des Nutzers?
+// die beendet die Skriptausführung
+
+
+// Abfrage des Nutzers
 try {
 
-    $stmt = $con->prepare("SELECT * FROM users WHERE id = :user_id"); // Datenbankabfrage vorbereiten und in $stmt abspeichern
+    $stmt = $db->prepare("SELECT * FROM users WHERE id = :user_id"); // Datenbankabfrage Verbereitung wird in $stmt gespeichert
     $stmt->bindParam(':user_id', $user_id);
-    $stmt->execute(); // Abfrage ausführen
-    $row = $stmt->fetch(PDO::FETCH_ASSOC); // Ergebnis der Abfrage in Array speichern
+    $stmt->execute(); // Abfrage wird ausführen
+    $row = $stmt->fetch(PDO::FETCH_ASSOC); // Ergebnisabfrage wird in einem Array abgespeichert
 }
 
-catch(PDOException $e) {             // Standard
+catch(PDOException $e) {
     echo "Error: ". $e->getMessage();
 }
 
 
 if(sha1($passwortcode)===$row['passwortcode']){
-    // Überprüfung, ob Passwortcode die Gültigkeit von 24h überschreitet
+    // Überprüfung, ob der Passwortcode die Gültigkeitsdauer von 1h überschreitet?
     $passwortcode_time = strtotime($row['passwortcode_time']);
     if($passwortcode_time < (time()-1*3600)){
         echo "Ihr Rücksetzungslink wurde vor mehr als 1h angefordert, bitte fordern Sie einen neuen an!";
@@ -43,7 +49,7 @@ if(sha1($passwortcode)===$row['passwortcode']){
     } else {
         echo "
             <form method='post' action='password_renew.php'>
-                <input type='hidden' value='". $row['id'] ."' name='id'>
+                <input type='hidden' value='". $row['user_id'] ."' name='id'>
                 <p>Neues Passwort eingeben:</p>
                 <input type='password' name='password'> <br> <br>
                 <p>Passwort wiederholen:</p>
