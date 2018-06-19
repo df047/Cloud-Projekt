@@ -35,8 +35,9 @@
   </div>
 </nav>
 
-<div> id = "home">
+<div id = "home">
   <div class="wrapper">
+    <div class="loginfeld">
     <form action="login_do.php" method="post" name="Login_Form" class="form-signin">
       <img id="loginimage" src="bilder/Thunderstorm_Teillogo.png">
       <h3 id="logintext">Your data, your cloud</h3>
@@ -46,10 +47,15 @@
       <input type="password" class="form-control" name="password" placeholder="Passwort" required=""/>
 
       <button class="btn btn-lg btn-primary btn-block"  name="Submit" value="Login" type="Submit">Login</button> <br>
-      <a href="#register1"><button class="btn btn-secondary btn-block">Registrieren</button></a>
-    </form>
 
-    <a href="password_forgotdo.php"><button class="btn btn-secondary btn-block">Passwort vergessen?</button></a>
+
+    </form>
+      <a href="#register1" class="btn btn-secondary btn-block">Registrieren</a>
+    <div style="text-align:center">
+      <a id="password_forgot" href="password_forgot.html"><button class="btn btn-link">Passwort vergessen?</button></a>
+    </div>
+
+    </div>
   </div>
 </div>
 <a name="über"></a>
