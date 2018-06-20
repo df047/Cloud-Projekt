@@ -46,7 +46,7 @@ if(!isset($_SESSION['user_id'])){
         <ul class="list-group">
             <li class="active"><a href="https://mars.iuk.hdm-stuttgart.de/~df047/dashboard.php">Meine Ablage</a></li>
             <li><a href="https://mars.iuk.hdm-stuttgart.de/~df047/dashboardfreigegeben.php">Für mich freigegeben</a></li>
-            <li><a href="#">Zuletzt verwendet</a></li>
+            <li><a href="createfolder.php">Zuletzt verwendet (Ordner erstellen)</a></li>
             <li><a href="#">Favoriten</a></li>
         </ul>
     </nav>
@@ -104,6 +104,7 @@ if(!isset($_SESSION['user_id'])){
         </nav>
     <div id="content">
         <div class="active">
+            <h1>Deine Ablage</h1>
         <?php
         $owner=$_SESSION["user_id"];
 
@@ -131,6 +132,12 @@ if(!isset($_SESSION['user_id'])){
             echo("&fileid=");
             echo("$zeile->file_id"."'>");
             echo("Download");
+            echo("</a>");
+            echo("<a href='https://mars.iuk.hdm-stuttgart.de/~df047/delete_file.php?filename=");
+            echo("$zeile->filename"."."."$zeile->filetype");
+            echo("&fileid=");
+            echo("$zeile->file_id"."'>");
+            echo("Löschen");
             echo("</a>");
             echo("<li><a href='https://mars.iuk.hdm-stuttgart.de/~df047/accesswrite.php?fileid=".$zeile->file_id."'>Freigeben für...</a>");
             echo("<li><button id='details' data-toggle='modal' data-target='#modal"."$zeile->file_id"."'".">Details</button>");
@@ -168,25 +175,55 @@ if(!isset($_SESSION['user_id'])){
                 $query2  = $db ->prepare($sql2);
                 $query2 ->execute();
                 while ($zeile2 = $query2->fetchObject()) {
-                    echo ($zeile2->username);
+                    echo ($zeile2->username." - "."<button id='question' type='button' class='btn btn-primary'>Entfernen</button><br>");
                 }
-
-
                 }
 
             echo("</div>
             <div class='modal-footer'>
                 <button type='button' class='btn btn-default' data-dismiss='modal'>Schließen</button>
             </div>
+            
         </div>
-
+            <br><h1>Deine Ordner</h1>
+            
+            
     </div>
 </div>");
+
         }
+
         ?>
-        </div>
-    </div>
-</div>
+            <h1>Deine Ordner</h1>
+            <?php
+            $owner=$_SESSION["user_id"];
+
+            require_once "logindaten.php";
+
+            try
+            {
+            $db= new PDO ($dsn,$dbuser,$dbpass);
+            }
+            catch (PDOException $p) {
+            echo("Fehler bei Aufbau der Datenbankverbindung.");
+            }
+            $sql3 = "SELECT * FROM folders WHERE owner=$owner";
+            $query3  = $db ->prepare($sql3);
+            $query3 ->execute();
+            while ($zeile3 = $query3->fetchObject()) {
+            echo("<div class='dropdown'>
+                <button class='btn btn-primary dropdown-toggle' type='button' data-toggle='dropdown'>");
+                    echo("$zeile3->folder_name");
+                    echo("<span class='caret'></span></button>
+                <ul class='dropdown-menu'>
+                    ");
+                        echo("<li><a href='https://mars.iuk.hdm-stuttgart.de/~df047/accesswritefolder.php?folderid=".$zeile3->folder_id."'>Freigeben für...</a></li>");
+                        //folderacceswrite erstellen
+                        echo("<li><a href='https://mars.iuk.hdm-stuttgart.de/~df047/showfolder.php?folderid="."$zeile3->folder_id"."'>Anzeigen</a></li>");
+                    echo("</ul></div><br>");}
+            ?>
+
+
 <!-- Modal -->
 <div id="myModal" class="modal fade" role="dialog">
     <div class="modal-dialog">
@@ -220,7 +257,6 @@ $(document).ready(function () {
     });
 
 });
-
 $('#uploadmodal').appendTo("body")
 </script>
 </body>
