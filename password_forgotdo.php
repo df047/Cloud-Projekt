@@ -49,10 +49,14 @@ try {
     $stmt->execute(); // Abfrage wird ausführen
     $row = $stmt->fetch(PDO::FETCH_ASSOC); // Ergebnisabfrage wird in einem Array abgespeichert
 
+}
 
 catch(PDOException $e) {
     echo "Fehler: ". $e->getMessage();
 }
+
+
+
 
 // 1. Test: Befindet sich die E-Mail Adresse in der Datenbank?
 
@@ -69,13 +73,10 @@ if(count($row)==0) {
     $betreff="Setzen Sie Ihr Passwort zurück";
     $url_passwortcode="https://mars.iuk.hdm-stuttgart.de/~df047/formpassword_renew.php?userid=".$row['id']."&code=".$passwortcode;
     $text="Hallo".$row['vorname'].$row['nachname'].",".
-    "Es wurde eine Änderung des Kennworts Ihres Thunderstorm-Kontos angefordert. Wenn Sie das waren, können Sie Ihr Passwort hier in der nächsten Stunde neu festlegen:"
+    "Es wurde eine Änderung des Kennworts Ihres Thunderstorm-Kontos angefordert. Wenn Sie das waren, können Sie Ihr Passwort hier neu festlegen:"
         .$url_passwortcode;
     mail($empfaenger,$betreff,$text,$absender);
     echo "Ein Link wurde soeben an die von Ihnen angegebene E-Mail-Adresse versendet";
-    echo "<br>";
-    echo "Zum Testen: <a href='$url_passwortcode'>Zurücksetzen</a>";
-
 
 }
 

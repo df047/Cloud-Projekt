@@ -41,12 +41,6 @@ catch(PDOException $e) {
 
 
 if(sha1($passwortcode)===$row['passwortcode']){
-    // Überprüfung, ob der Passwortcode die Gültigkeitsdauer von 1h überschreitet?
-    $passwortcode_time = strtotime($row['passwortcode_time']);
-    if($passwortcode_time < (time()-1*3600)){
-        echo "Ihr Rücksetzungslink wurde vor mehr als 1h angefordert, bitte fordern Sie einen neuen an!";
-        die();
-    } else {
         echo "
             <form method='post' action='password_renew.php'>
                 <input type='hidden' value='". $row['user_id'] ."' name='id'>
@@ -57,6 +51,4 @@ if(sha1($passwortcode)===$row['passwortcode']){
                 <input type='submit' value='Zurücksetzen'>
              </form>   
         ";
-    }
-
 }
