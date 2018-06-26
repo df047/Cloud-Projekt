@@ -4,29 +4,56 @@
 }
 
 .navbar {
-    background-color:rgba(224, 224, 224,0.9);
-    padding: 1% 0;
+    background-color:rgba(255, 255, 255,0.9);
+    padding: 0% 0;
     font-size: 1.2em;
 }
 
 .navbar-brand {
-    min-height: 55px;
+    min-height: 40px;
     padding: 0 15px 5px;
 }
 
 .bild1 {
-    height: 60px;
+    height: 40px;
 }
 
 .navbar-default .navbar-nav li a {
     color: #2e2e2e;
+
 }
 .navbar-default .navbar-nav li a:hover, .navbar-default .navbar-nav li a:active {
-    color: #FFFFFF;
+    color: #070076;
+
 }
 
+#About
+{
+    height: 100%;
+    display: table;
+    position: relative;
+    width: 100%;
+    background-size: cover;
+
+}
+
+#Contact
+{
+    height: 100%;
+    display: table;
+    position: relative;
+    width: 100%;
+    background-size: cover;
+}
+
+
+#loginbutton {
+    margin: 10px;
+}
+
+
 #home {
-    background: url(bilder/Startbild.jpg) no-repeat center center fixed;
+    background: url(bilder/Startbild_1.jpg) repeat center center fixed;
     display: table;
     height: 100%;
     position: relative;
@@ -52,7 +79,7 @@
 #fixed {
     background: url("bilder/desk-3139127_1920.jpg")no-repeat center center fixed;
     display: table;
-    height: 60%;
+    height: 100%;
     position: relative;
     width: 100%;
     background-size: cover;
@@ -118,9 +145,7 @@ input[type="password"] {
     border-top-left-radius: 0;
     border-top-right-radius: 0;
 }
- #loginbutton {
-     margin: 10px;
- }
+
 
  #loginimage {
      max-width: 25%;
@@ -148,4 +173,19 @@ input[type="password"] {
     max-width: 420px;
     margin: 0 auto;
     background-color: rgba(224, 224, 224, 0.7);
+}
+
+
+
+#registerbutton
+
+{
+    margin-left: 3%;
+    margin-top: 5%;
+
+}
+
+#footerimage {
+    margin-left: 35%;
+    max-width: 150px;
 }

@@ -9,13 +9,15 @@ session_start();
     $identificator=$_SESSION['user_id'];
 
 }
+
 if($_FILES["uploadfile"]["name"]=="")
 {
     echo "Fehler Dateiname.";
     sleep(4);
     header("Location: https://mars.iuk.hdm-stuttgart.de/~df047/editprofile.php");
     exit();
-    die(); }
+    die();
+}
 
 if (isset($namearray[2])){
     echo ("Ungültiger Dateiname, bitte keine Punkte im Dateiname.");
@@ -36,10 +38,7 @@ if ($_FILES["uploadfile"]["size"] > 8000000) {
 }
 
 if ($namearray[1] == "jpg" OR $namearray[1]=="png" OR $namearray[1]=="JPG"OR $namearray[1]== "jpeg" OR $namearray[1] == "gif" OR $namearray[1]=="pdf" OR $namearray[1]== "gif") {
-    echo "Dateiart ok<br>";
-    sleep(4);
-    header("Location: https://mars.iuk.hdm-stuttgart.de/~df047/showprofile.php");
-    exit();
+    echo "Dateiart ok<br>Sie werden in 3 Sekunden auf Ihre Profilseite weitergeleitet";
 } else {
     echo"Dateiart nicht zugelassen.";
     sleep(4);
@@ -55,10 +54,15 @@ try
 catch (PDOException $p) {
     echo("Fehler bei Aufbau der Datenbankverbindung.");
 }
-$stmt = $db ->prepare("INSERT INTO users (profilepicture) VALUES(:profilepicture) WHERE id=$identificator");
+$stmt = $db ->prepare("UPDATE users SET profilepicture=:profilepicture WHERE id=$identificator");
 $stmt ->bindParam('profilepicture', $fileName);
 $stmt ->execute();
 
 if (!move_uploaded_file($_FILES["uploadfile"]["tmp_name"], "/home/df047/public_html/profilepictures/".$_FILES["uploadfile"]["name"])) { echo "Datei nicht hochgeladen";
-    die();
+
 }
+sleep(4);
+header("Location: https://mars.iuk.hdm-stuttgart.de/~df047/showprofile.php");
+exit();
+
+// Löschen des alten Profilbildes auf dem Server

@@ -4,6 +4,7 @@ if(!isset($_SESSION['user_id'])){
     header("Location: https://mars.iuk.hdm-stuttgart.de/~df047/logout.php");
     exit();
 }
+$folderid=$_GET["folderid"];
 ?>
 <!DOCTYPE html>
 <html>
@@ -14,7 +15,7 @@ if(!isset($_SESSION['user_id'])){
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <link href="dashboard3style.css" rel="stylesheet" />
+    <link href="dashboard3style.css" rel="stylesheet">
 </head>
 
 <body>
@@ -33,8 +34,8 @@ if(!isset($_SESSION['user_id'])){
                 </form>
             </li>
             <li class="active"><a href="https://mars.iuk.hdm-stuttgart.de/~df047/dashboard.php">Meine Ablage</a></li>
-            <li><a href="#">Für mich freigegeben</a></li>
-            <li><a href="#">Zuletzt verwendet</a></li>
+            <li><a href="https://mars.iuk.hdm-stuttgart.de/~df047/dashboardfreigegeben.php">Für mich freigegeben</a></li>
+            <li><a href="createfolder.php">Zuletzt verwendet (Ordner erstellen)</a></li>
             <li><a href="#">Favoriten</a></li>
         </ul>
     </nav>
@@ -91,55 +92,64 @@ if(!isset($_SESSION['user_id'])){
         </div>
     </nav>
     <div id="content">
-        <h1>Mein Profil</h1><br>
-        <?php
-        require_once "logindaten.php";
+        <div class="active">
 
-        try
-        {
-            $db= new PDO ($dsn,$dbuser,$dbpass);
-        }
-        catch (PDOException $p) {
-            echo("Fehler bei Aufbau der Datenbankverbindung.");
-        }
-        $identificator= $_SESSION['user_id'];
-        $sql = "SELECT * FROM users WHERE id='$identificator'";
-        $query  = $db ->prepare($sql);
-        $query ->execute();
-        while ($zeile = $query->fetchObject()) {
-            echo ("<h2>$zeile->username</h2><br>");
-            echo ("<div><h1>Meine Kontaktdaten</h1><br>
-                    <h3>Vorname:<br></h3>
-                    $zeile->vorname<br>
-                    <h3>Vorname:<br></h3>
-                    $zeile->nachname<br>
-                    <h3>Email-Adresse:<br></h3>
-                    $zeile->e_mail<br>
-                    <h3>Profilbild</h3><br>
-                    <img class='profilepicture' width='500px' height='500' src='https://mars.iuk.hdm-stuttgart.de/~df047/profilepictures/");
-            echo("$zeile->profilepicture");
-            echo ("'><br>");
-            echo("<a class=\"btn-primary\" href='");
-            echo("https://mars.iuk.hdm-stuttgart.de/~df047/editprofile.php?id=".$zeile->id."'>Ändern</a>
-                    </div>");
-        }
-        ?>
+            <?php
+            require_once "logindaten.php";
 
+            try
+            {
+                $db= new PDO ($dsn,$dbuser,$dbpass);
+            }
+            catch (PDOException $p) {
+                echo("Fehler bei Aufbau der Datenbankverbindung.");
+            }
+            $sql2 = "SELECT * FROM folders WHERE folder_id='$folderid'";
+            $query2  = $db ->prepare($sql2);
+            $query2 ->execute();
+            while ($zeile2 = $query2->fetchObject()) {
+                echo("<h1>"."$zeile2->folder_name"."</h1><br>");
+                echo ("<button type='button' class='btn'>+</button>");
+
+            }
+            ?>
+        </div>
     </div>
 </div>
-<script>
-    $("#upload").click(function(){
-        $("#dateihochladen").toggle();
-    });
 
-    $(document).ready(function () {
+            <!-- Modal -->
+            <div id="myModal" class="modal fade" role="dialog">
+                <div class="modal-dialog">
 
-        $('#sidebarCollapse').on('click', function () {
-            $('#sidebar').toggleClass('active');
-            $('#content').toggleClass('active');
-        });
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">sergqer</h4>
+                        </div>
+                        <div class="modal-body">
+                            <p>Some text in the modal.</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
 
-    });
-</script>
+                </div>
+            </div>
+            <script>
+                $("#upload").click(function(){
+                    $("#dateihochladen").toggle();
+                });
+
+                $(document).ready(function () {
+
+                    $('#sidebarCollapse').on('click', function () {
+                        $('#sidebar').toggleClass('active');
+                        $('#content').toggleClass('active');
+                    });
+
+                });
+            </script>
 </body>
 </html>

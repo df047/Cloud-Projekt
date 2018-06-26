@@ -14,7 +14,7 @@ if(!isset($_SESSION['user_id'])){
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <link href="dashboard3style.css" rel="stylesheet" />
+    <link href="dashboard3style.css" rel="stylesheet">
 </head>
 
 <body>
@@ -33,7 +33,7 @@ if(!isset($_SESSION['user_id'])){
                 </form>
             </li>
             <li class="active"><a href="https://mars.iuk.hdm-stuttgart.de/~df047/dashboard.php">Meine Ablage</a></li>
-            <li><a href="#">Für mich freigegeben</a></li>
+            <li><a href="https://mars.iuk.hdm-stuttgart.de/~df047/dashboardfreigegeben.php">Für mich freigegeben</a></li>
             <li><a href="#">Zuletzt verwendet</a></li>
             <li><a href="#">Favoriten</a></li>
         </ul>
@@ -91,40 +91,39 @@ if(!isset($_SESSION['user_id'])){
         </div>
     </nav>
     <div id="content">
-        <h1>Mein Profil</h1><br>
-        <?php
-        require_once "logindaten.php";
+        <div class="active">
+            <?php
+            $currentuser=$_SESSION["user_id"];
 
-        try
-        {
-            $db= new PDO ($dsn,$dbuser,$dbpass);
-        }
-        catch (PDOException $p) {
-            echo("Fehler bei Aufbau der Datenbankverbindung.");
-        }
-        $identificator= $_SESSION['user_id'];
-        $sql = "SELECT * FROM users WHERE id='$identificator'";
-        $query  = $db ->prepare($sql);
-        $query ->execute();
-        while ($zeile = $query->fetchObject()) {
-            echo ("<h2>$zeile->username</h2><br>");
-            echo ("<div><h1>Meine Kontaktdaten</h1><br>
-                    <h3>Vorname:<br></h3>
-                    $zeile->vorname<br>
-                    <h3>Vorname:<br></h3>
-                    $zeile->nachname<br>
-                    <h3>Email-Adresse:<br></h3>
-                    $zeile->e_mail<br>
-                    <h3>Profilbild</h3><br>
-                    <img class='profilepicture' width='500px' height='500' src='https://mars.iuk.hdm-stuttgart.de/~df047/profilepictures/");
-            echo("$zeile->profilepicture");
-            echo ("'><br>");
-            echo("<a class=\"btn-primary\" href='");
-            echo("https://mars.iuk.hdm-stuttgart.de/~df047/editprofile.php?id=".$zeile->id."'>Ändern</a>
-                    </div>");
-        }
-        ?>
+            require_once "logindaten.php";
 
+            try
+            {
+                $db= new PDO ($dsn,$dbuser,$dbpass);
+            }
+            catch (PDOException $p) {
+                echo("Fehler bei Aufbau der Datenbankverbindung.");
+            }
+            $sql = "SELECT * FROM files WHERE access_rights LIKE '%$currentuser%'";
+            $query  = $db ->prepare($sql);
+            $query ->execute();
+            while ($zeile = $query->fetchObject()) {
+                echo("<div class='dropdown'>
+                    <button class='btn btn-primary dropdown-toggle' type='button' data-toggle='dropdown'>");
+                echo("$zeile->filename"."."."$zeile->filetype");
+                echo("<span class='caret'></span></button>
+                    <ul class='dropdown-menu'>
+                        <li>");
+                echo("<a href='https://mars.iuk.hdm-stuttgart.de/~df047/download.php?filename=");
+                echo("$zeile->filename"."."."$zeile->filetype");
+                echo("&fileid=");
+                echo("$zeile->file_id"."'>");
+                echo("Download");
+                echo("</a>");
+                echo("</ul></div><br>");
+            }
+            ?>
+        </div>
     </div>
 </div>
 <script>

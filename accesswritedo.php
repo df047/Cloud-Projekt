@@ -53,6 +53,7 @@ while ($zeile = $query->fetchObject()) {
         echo $existing;
     }
     else{
+        //E-Mail versand an nicht registrierten Nutzer
         echo("User nicht vorhanden");
         die;
     }

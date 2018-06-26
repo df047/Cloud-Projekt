@@ -160,6 +160,7 @@ if(!isset($_SESSION['user_id'])){
                 Freigegeben für:<br> ");
             $accesscode=$zeile->access_rights;
             $userarray=explode(".",$accesscode);
+            $i=0;
             foreach($userarray as $value){
                 require_once "logindaten.php";
 
@@ -174,12 +175,29 @@ if(!isset($_SESSION['user_id'])){
                 $sql2 = "SELECT * FROM users WHERE id='$value'";
                 $query2  = $db ->prepare($sql2);
                 $query2 ->execute();
-                while ($zeile2 = $query2->fetchObject()) {
-                    echo ($zeile2->username." - "."<button id='question' type='button' class='btn btn-primary'>Entfernen</button><br>");
-                }
-                }
 
-            echo("</div>
+                while ($zeile2 = $query2->fetchObject()) {
+                    echo ($zeile2->username." - "."<button id='question".$i."' type='button' class='btn btn-primary'>Entfernen</button><br>");
+
+                    echo("<div class='alert alert-danger' id='accessdeletebox".$i."'>
+                          <strong>Achtung</strong> Wollen sie diese Freigabe wirklich löschen?
+                          <form action='accessdeletedo.php' method='post'>
+                          <input hidden type='text' name='usertodelete' value='".$i."'>
+                          <input hidden type='text' name='fileid' value='".$zeile->file_id."'>
+                          <input type='submit' value='JA'>
+                          
+                        </form>
+                        </div>
+                        ");
+                    echo("<script>
+                        $('#question".$i."').click(function(){
+                            $('#accessdeletebox".$i."').toggle();
+                        });</script>");
+                    $i++;
+                }
+                }
+            echo("
+            </div>
             <div class='modal-footer'>
                 <button type='button' class='btn btn-default' data-dismiss='modal'>Schließen</button>
             </div>

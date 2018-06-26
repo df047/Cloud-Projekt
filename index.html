@@ -26,10 +26,10 @@
     </div>
     <div class="collapse navbar-collapse" id="navbar-collapse-main">
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="#über">Über</a> </li>
-        <li><a href="#bottom">Kontakt</a></li>
-        <li><a href="#register1">Registrieren</a> </li>
-        <a href="#"><button id="loginbutton" type="button" class="btn btn-primary">Login</button></a>
+        <li><a id=navbar_aboutus href="#über">Über uns</a> </li>
+        <li><a id=navbar_register href="#register1">Registrieren</a> </li>
+        <li><a id=navbar_kontakt href="#bottom">Kontakt</a></li>
+        <li> </li><a href="#"><button id="loginbutton" type="button" class="btn btn-primary">Login</button></a> </li>
       </ul>
     </div>
   </div>
@@ -60,64 +60,97 @@
 </div>
 <a name="über"></a>
 
-<div class="padding">
+<div class="padding" id="About">
   <div class="container">
+
     <div class="row">
-      <div class="col-sm-6">
+
+      <div class="col-sm-6" >
+
         <img src="">
       </div>
       <div class="col-sm-6 text-center">
+        <br>
         <h2>Über Thunderstorm</h2>
-        <p>Hier sind alle ihr Dateien an einem zentralen Ort gespeichert.
-        Sie sind leicht zu finden und werden sicher auf allen ihren Geräten synchronisiert - damit
-        Sie immer und überall Zugriff darauf haben. Die langwierige Suche nach wichtigen Dateien hat endlich ein Ende.</p>
-        <p>Thunderstorm ist für eine kreative Zusammenarbeit optimiert. Hier können Sie umfangreiche
-        Dateien, z.B. in den Formaten PowerPoint, Photoshop oder Sketch für beliebige Nutzer freigeben.
-        Alle verwenden dieselbe aktuelle Version und alle ziehen an einem Strang. Endlich.</p>
+        <br>
+        <br>
+        <br>
+        <p> Thunderstorm ist eine von drei Stundente der Hochschule der Medien entwickelte Cloud-Lösung für jedermann.
+          Ganz nach der Philosophie des Unternehmens "Thunderstorm - your data, your cloud" verhelfen wir Ihnen mit einer einfach zu bedienenden Benutzungsoberfläche,
+          den Einstieg in das Thema Online-Speicher möglichkeiten.
+          <br>
+          <br>
+
+          <p> Einmal registriert, können Sie sofort loslegen. Nicht nur Dateien hoch- & runterladen, sondern auch löschen,
+        umbenennen und ganz einfach via E-Mail Versand mit anderen Thunderstorm-Kontakten Dokumente freigeben.
+        <br>
+        <br>
+
+        <p>Thunderstorm ist somit für die kreative Zusammenarbeit optimiert. Hier können Sie umfangreiche
+        Dateien, z.B. in den Formaten PDF, JPG oder PNG für beliebige Nutzer freigeben.
       </div>
     </div>
-    <a name="register1"></a>
+
   </div>
+
 </div>
 
 
 <div id="fixed">
-  <div class="container-fluid">
-    <section class="container">
+  <div class="container-fluid" >
+    <a name="register1"></a>
+    <section class="container" >
       <form action="signupdo.php" method="post">
-      <div class="container-page">
+      <div class="container-page" >
         <div class="col-md-6">
-          <h3 class="dark-grey">Registrieren</h3>
-
+          <br>
+          <br>
+          <h1 class="dark-grey">Registrieren</h1>
+          <br>
+          <br>
           <div class="form-group col-lg-6">
             <label>Vorname</label>
             <input type="text" name="vorname" class="form-control" id="" value="">
           </div>
 
-          <div class="form-group col-lg-6">
+
+          <div class="form-group col-lg-6" id="lastname">
             <label>Nachname</label>
             <input type="text" name="nachname" class="form-control" id="" value="">
           </div>
+          <br>
+          <br>
 
           <div class="form-group col-lg-12">
             <label>Benutzername</label>
             <input type="text" name="username" class="form-control" id="" value="">
           </div>
+          <br>
+          <br>
 
           <div class="form-group col-lg-6">
             <label>Passwort</label>
             <input type="password" name="password" class="form-control" id="" value="">
           </div>
+          <br>
+          <br>
 
           <div class="form-group col-lg-6">
             <label>Passwort wiederholen</label>
             <input type="password" name="passwordconfirm" class="form-control" id="" value="">
           </div>
+          <br>
+          <br>
 
           <div class="form-group col-lg-12">
             <label>Email Adresse</label>
             <input type="text" name="email" class="form-control" id="" value="">
           </div>
+          <br>
+          <br>
+
+
+          <button id="registerbutton" type="submit" class="btn btn-primary" value="Senden">Registrieren</button>
 
 
         </div>
@@ -126,12 +159,12 @@
           <h3 class="dark-grey">Nutzungsbedingungen</h3>
           <p>
             Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.
-            At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet,
-            consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,
-            sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+          At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet,
+          consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,
+          sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
           </p>
 
-          <button type="submit" class="btn btn-primary" value="Senden">Registrieren</button>
+
         </div>
       </div>
       </form>
@@ -143,9 +176,11 @@
   <a name="bottom"></a>
   <div class="row">
     <div class="col-sm-4">
-      <h3>Kontaktiere uns</h3> <br>
-      <h4> Thunderstorm GmbH</h4>
-      <h4>Nobelstraße 10, 70569 Stuttgart</h4>
+      <h3>Thunderstorm GmbH</h3> <br>
+      <h4>Nobelstraße 10 </h4>
+      <h4>70569 Stuttgart</h4> <br>
+      <h4> Tel: +49(0)711 94545782 </h4>
+      <h4> E-Mail: info.thunderstorm@mail.de</h4>
       </div>
     <div class="col-sm-4">
       <h3>Social Media</h3>
@@ -155,10 +190,7 @@
       <a href="#" class="fa fa-instagram"></a>
     </div>
     <div class="col-sm-4">
-      <h3>Kontakt</h3> <br>
-      <h4> Tel: +49(0)71194545782</h4>
-      <h4> E-mail: info.thunderstorm@mail.de</h4>
-
+      <img id="footerimage" src="bilder/Thunderstorm_weiss.png">
     </div>
   </div>
 </footer>

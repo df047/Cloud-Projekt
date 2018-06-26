@@ -5,6 +5,7 @@ if(!isset($_SESSION['user_id'])){
     exit();
 }
 $file=$_GET["fileid"];
+//check ob benutzer auch owner dieser file id ist.
 
 ?>
 <!DOCTYPE html>
@@ -94,6 +95,9 @@ $file=$_GET["fileid"];
     </nav>
     <div id="content">
         <form action="accesswritedo.php" method="post">
+            <p>Bitte gib hier die E-Mail-Adresse des Nutzers ein, für den die Datei freigegeben werden soll.</p><br>
+            <p>Falls der Nutzer nicht bei Thunderstorm registriert sein sollte,<br>
+                wird ein Link an diese Email-Adresse geschickt, damit die Person Zugriff auf die Datei erhält.</p><br>
             <input type="text" name="user_email">
             <input type="text" name="file" value="<?php echo("$file")?>" hidden>
             <input type="submit" value="Freigeben">
