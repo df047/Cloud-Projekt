@@ -120,7 +120,14 @@ if(!isset($_SESSION['user_id'])){
                 echo("$zeile->file_id"."'>");
                 echo("Download");
                 echo("</a>");
-                echo("</ul></div><br>");
+                echo("</ul> - freigegeben von ");
+                $sql2 = "SELECT * FROM users WHERE id=$zeile->owner";
+                $query2  = $db ->prepare($sql2);
+                $query2 ->execute();
+                while ($zeile2 = $query2->fetchObject()) {
+                    echo($zeile2->username."</div>");
+                }
+
             }
             ?>
         </div>

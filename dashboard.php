@@ -140,7 +140,7 @@ if(!isset($_SESSION['user_id'])){
             echo("Löschen");
             echo("</a>");
             echo("<li><a href='https://mars.iuk.hdm-stuttgart.de/~df047/accesswrite.php?fileid=".$zeile->file_id."'>Freigeben für...</a>");
-            echo("<li><button id='details' data-toggle='modal' data-target='#modal"."$zeile->file_id"."'".">Details</button>");
+            echo("<li><a href='#' id='details' data-toggle='modal' data-target='#modal"."$zeile->file_id"."'".">Details</a>");
             echo("</ul></div><br>");
             echo("<!-- Modal -->
                     <div id=");
@@ -179,7 +179,7 @@ if(!isset($_SESSION['user_id'])){
                 while ($zeile2 = $query2->fetchObject()) {
                     echo ($zeile2->username." - "."<button id='question".$i."' type='button' class='btn btn-primary'>Entfernen</button><br>");
 
-                    echo("<div class='alert alert-danger' id='accessdeletebox".$i."'>
+                    echo("<div hidden class='alert alert-danger' id='accessdeletebox".$i."'>
                           <strong>Achtung</strong> Wollen sie diese Freigabe wirklich löschen?
                           <form action='accessdeletedo.php' method='post'>
                           <input hidden type='text' name='usertodelete' value='".$i."'>
@@ -202,10 +202,7 @@ if(!isset($_SESSION['user_id'])){
                 <button type='button' class='btn btn-default' data-dismiss='modal'>Schließen</button>
             </div>
             
-        </div>
-            <br><h1>Deine Ordner</h1>
-            
-            
+        </div>   
     </div>
 </div>");
 

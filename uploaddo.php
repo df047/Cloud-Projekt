@@ -67,7 +67,8 @@ if (!move_uploaded_file($_FILES["uploadfile"]["tmp_name"], "/home/df047/public_h
     exit();
     die();
 }
-
+header("Location: https://mars.iuk.hdm-stuttgart.de/~df047/dashboard.php");
+exit();
 
 /**
  * Created by PhpStorm.

@@ -5,6 +5,7 @@ if(!isset($_SESSION['user_id'])){
     exit();
 }
 $folderid=$_GET["folderid"];
+$identificator= $_SESSION['user_id'];
 ?>
 <!DOCTYPE html>
 <html>
@@ -78,7 +79,7 @@ $folderid=$_GET["folderid"];
                             catch (PDOException $p) {
                                 echo("Fehler bei Aufbau der Datenbankverbindung.");
                             }
-                            $identificator= $_SESSION['user_id'];
+
                             $sql = "SELECT * FROM users WHERE id='$identificator'";
                             $query  = $db ->prepare($sql);
                             $query ->execute();
@@ -108,9 +109,44 @@ $folderid=$_GET["folderid"];
             $query2  = $db ->prepare($sql2);
             $query2 ->execute();
             while ($zeile2 = $query2->fetchObject()) {
-                echo("<h1>"."$zeile2->folder_name"."</h1><br>");
-                echo ("<button type='button' class='btn'>+</button>");
+                echo("<h1>" . "$zeile2->folder_name" . "</h1><br>");
+                echo("<button type='button' class='btn' id='newfilebutton' data-toggle='modal' data-target='#newfile'>+</button><br>");
+                $filearray = explode(".", $zeile2->file_code);
+                $i = 0;
+                foreach ($filearray as $value) {
+                    require_once "logindaten.php";
 
+                    try {
+                        $db = new PDO ($dsn, $dbuser, $dbpass);
+                    } catch (PDOException $p) {
+                        echo("Fehler bei Aufbau der Datenbankverbindung.");
+                    }
+
+                    $sql4 = "SELECT * FROM files WHERE file_id='$value'";
+                    $query4 = $db->prepare($sql4);
+                    $query4->execute();
+
+                    while ($zeile4 = $query4->fetchObject()) {
+                        echo($zeile4->filename . "." . $zeile4->filetype . " - " . "<button id='question" . $i . "' type='button' class='btn btn-primary'>Entfernen</button><br>");
+                        echo("<div hidden class='alert alert-danger' id='accessdeletebox" . $i . "'>
+                          <strong>Achtung</strong> Wollen Sie diese Datei wirklich aus dem Ordner entfernen?<br>
+                          (Die Datei wird nur aus dem Ordner entfernt aber befindet sich weiterhin in Ihrer Ablage.<br>
+                          Wenn Sie Datei vollständig löschen wollen, tun sie dies bitte in <a style='color:blue' href='https://mars.iuk.hdm-stuttgart.de/~df047/dashboard.php'>Ihrer Ablage</a>!
+                          <form action='deletefilefromfolder.php' method='post'>
+                          <input hidden type='text' name='filetodelete' value='" . $i . "'>
+                          <input hidden type='text' name='folderid' value='" . $zeile2->folder_id . "'>
+                          <input type='submit' value='JA'>
+                          
+                        </form>
+                        </div>
+                        ");
+                        echo("<script>
+                        $('#question" . $i . "').click(function(){
+                            $('#accessdeletebox" . $i . "').toggle();
+                        });</script>");
+                        $i++;
+                    }
+                }
             }
             ?>
         </div>
@@ -118,17 +154,34 @@ $folderid=$_GET["folderid"];
 </div>
 
             <!-- Modal -->
-            <div id="myModal" class="modal fade" role="dialog">
+            <div id="newfile" class="modal fade" role="dialog">
                 <div class="modal-dialog">
 
                     <!-- Modal content-->
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal">&times;</button>
-                            <h4 class="modal-title">sergqer</h4>
+                            <h4 class="modal-title">Deine Ablage</h4>
                         </div>
                         <div class="modal-body">
                             <p>Some text in the modal.</p>
+                            <?php
+                            require_once "logindaten.php";
+
+                            try
+                            {
+                                $db= new PDO ($dsn,$dbuser,$dbpass);
+                            }
+                            catch (PDOException $p) {
+                                echo("Fehler bei Aufbau der Datenbankverbindung.");
+                            }
+                            $sql3 = "SELECT * FROM files WHERE owner='$identificator'";
+                            $query3  = $db ->prepare($sql3);
+                            $query3 ->execute();
+                            while ($zeile3 = $query3->fetchObject()) {
+                                echo("<a class='btn btn-primary' href='https://mars.iuk.hdm-stuttgart.de/~df047/addfiletofolder.php?filetoadd=".$zeile3->file_id."&folderid=$folderid'>$zeile3->filename".".$zeile3->filetype</a><br>");
+                            }
+                            ?>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

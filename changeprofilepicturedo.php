@@ -2,14 +2,35 @@
 session_start();
 {
     $namearray= explode (".", $_FILES["uploadfile"]["name"], 2);
-    //$fileName=$_FILES["uploadfile"]["name"];
+    $fileName=$namearray[0].".".$namearray[1];
     //$fileType=$_FILES["uploadfile"]["type"];
     $fileSize=$_FILES["uploadfile"]["size"];
-    $filePath= "mars.iuk.hdm-stuttgart.de/home/df047/public_html/profilepictures"."$fileName";
+    //$filePath= "mars.iuk.hdm-stuttgart.de/home/df047/public_html/profilepictures"."$fileName";
     $identificator=$_SESSION['user_id'];
 
 }
+//Löschen des alten Profilbildes
+$directory= "/home/df047/public_html/profilepictures";
+require_once "logindaten.php";
 
+try
+{
+    $db= new PDO ($dsn,$dbuser,$dbpass);
+}
+catch (PDOException $p) {
+    echo("Fehler bei Aufbau der Datenbankverbindung.");
+}
+$sql = "SELECT * FROM users WHERE id='$identificator'";
+$query  = $db ->prepare($sql);
+$query ->execute();
+
+while ($zeile = $query->fetchObject()) {
+    $currentpicture= $zeile->profilepicture;}
+
+
+unlink($directory."/".$currentpicture);
+
+//Upload des neuen Profilbildes
 if($_FILES["uploadfile"]["name"]=="")
 {
     echo "Fehler Dateiname.";
@@ -54,6 +75,8 @@ try
 catch (PDOException $p) {
     echo("Fehler bei Aufbau der Datenbankverbindung.");
 }
+
+//Zuordnung für die Datenbank
 $stmt = $db ->prepare("UPDATE users SET profilepicture=:profilepicture WHERE id=$identificator");
 $stmt ->bindParam('profilepicture', $fileName);
 $stmt ->execute();
@@ -61,7 +84,7 @@ $stmt ->execute();
 if (!move_uploaded_file($_FILES["uploadfile"]["tmp_name"], "/home/df047/public_html/profilepictures/".$_FILES["uploadfile"]["name"])) { echo "Datei nicht hochgeladen";
 
 }
-sleep(4);
+sleep(3);
 header("Location: https://mars.iuk.hdm-stuttgart.de/~df047/showprofile.php");
 exit();
 

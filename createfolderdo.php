@@ -15,7 +15,7 @@ try
 catch (PDOException $p) {
     echo("Fehler bei Aufbau der Datenbankverbindung.");
 }
-$stmt = $db ->prepare("INSERT INTO folders (folder_id, owner, folder_name, file_code) VALUES('',$owner,:foldername,'')");
+$stmt = $db ->prepare("INSERT INTO folders (folder_id, owner, folder_name, file_code, access_code) VALUES('',$owner,:foldername,'','')");
 $stmt ->bindParam('foldername', $foldername);
 $stmt ->execute();
 ?>
