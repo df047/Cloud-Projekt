@@ -72,17 +72,10 @@ if(count($row)==0) {
     $absender="From: Thunderstorm GmbH <info.thunderstorm@mail.de>";
     $betreff="Setzen Sie Ihr Passwort zurück";
     $url_passwortcode="https://mars.iuk.hdm-stuttgart.de/~df047/formpassword_renew.php?userid=".$row['id']."&code=".$passwortcode;
-    $text="Hallo".$row['vorname'].$row['nachname'].",".
+    $text="Hallo ".$row['vorname']." ".$row['nachname'].",".
     "Es wurde eine Änderung des Kennworts Ihres Thunderstorm-Kontos angefordert. Wenn Sie das waren, können Sie Ihr Passwort hier neu festlegen:"
         .$url_passwortcode;
     mail($empfaenger,$betreff,$text,$absender);
     echo "Ein Link wurde soeben an die von Ihnen angegebene E-Mail-Adresse versendet";
 
 }
-
-
-
-
-
-
-
