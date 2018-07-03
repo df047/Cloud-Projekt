@@ -110,9 +110,15 @@ $identificator= $_SESSION['user_id'];
             $query2 ->execute();
             while ($zeile2 = $query2->fetchObject()) {
                 echo("<h1>" . "$zeile2->folder_name" . "</h1><br>");
+                //Button zum hinzufügen von Dateien wird geladen, öffnet das Modal #newfile weiter unten
                 echo("<button type='button' class='btn' id='newfilebutton' data-toggle='modal' data-target='#newfile'>+</button><br>");
+                /*Um die einzelnen Dateien anzeigen zu lassen, wird der Filecode, der beschreibt welche
+                Dateien sich im Ordner befinden in seine Einzelteile durch explode() in ein Array aufgespalten*/
                 $filearray = explode(".", $zeile2->file_code);
+                /*Die Zählvariable $i gibt an, an welcher Stelle sich die Datei im Filecode befindet.
+                So weiß das Programm später welche Stelle im Code verschoben bzw. gelöscht werden muss*/
                 $i = 0;
+                /*Nun wird für jede Datei im Filecode ein Dropdown-Button erstellt*/
                 foreach ($filearray as $value) {
                     require_once "logindaten.php";
 
@@ -133,15 +139,20 @@ $identificator= $_SESSION['user_id'];
                         echo("<span class='caret'></span></button>
                                 <ul class='dropdown-menu'>
                         <li>");
+                        //Der erste Dropdownlink führt zum Download der Datei
                         echo("<a href='https://mars.iuk.hdm-stuttgart.de/~df047/download.php?filename=");
                         echo("$zeile4->filename"."."."$zeile4->filetype");
                         echo("&fileid=");
                         echo("$zeile4->file_id"."'>");
                         echo("Download");
                         echo("</a></li>");
+                        /*Der zweite Dropdownlink öffnet das Modal mit der id #movefilemodal, das für das Verschieben
+                        der Datei notwendig ist*/
                         echo("<li><a id='movefile' href='#' data-toggle='modal' data-target='#movefilemodal".$i."'>");
                         echo("in Ordner verschieben");
                         echo("</a></li>");
+                        /*der dritte Dropdownlink öffnet einen Alert, der abfragt ob die Datei wirklich gelöscht werden soll
+                        und generiert gleichzeitig ein Formular, das zum Löschen benötigt wird, falls JA gedrückt wird*/
                         echo("<li><a href='#' id='question" . $i . "'>Entfernen</a></li></ul></div>");
                         echo("<div hidden class='alert alert-danger' id='accessdeletebox" . $i . "'>
                           <strong>Achtung</strong> Wollen Sie diese Datei wirklich aus dem Ordner entfernen?<br>
@@ -155,6 +166,7 @@ $identificator= $_SESSION['user_id'];
                         <button id='no".$i."'>Nein</button>
                         </div>
                         ");
+                        /*Das angesprochene #movefilemodal*/
                         echo("<div id='movefilemodal".$i."' class='modal fade' role='dialog'>
                                 <div class='modal-dialog'>
                 
@@ -166,9 +178,13 @@ $identificator= $_SESSION['user_id'];
                                         </div>
                                         <div class='modal-body'>
                                             <p>Ornder auswählen:</p>");
+                        /*Durch dieses SQL Statement werden alle Ordner, die der Nutzer besitzt aufgelistet,
+                        außer der Ordner,in dem sich die Datei bereits befindet*/
                         $sql5 = "SELECT * FROM folders WHERE owner='$identificator' AND NOT folder_id='$folderid'";
                         $query5 = $db->prepare($sql5);
                         $query5->execute();
+                        /*für jeden Ordner der zu Verfügung steht, wird ein Link angezeigt
+                        der die Datei in den jeweiligen Ordner verschiebt*/
                             while ($zeile5 = $query5->fetchObject()) {
                                 echo("<a class='btn btn-primary' href='https://mars.iuk.hdm-stuttgart.de/~df047/movefiletofolder.php?fileid=");
                                 echo($zeile4->file_id . "&filetodelete=");
@@ -187,6 +203,7 @@ $identificator= $_SESSION['user_id'];
         
                                </div>
                             </div>");
+                        //Das sind die JQuery Skripte, die den Alert zum Löschen öffnen/schließen
                         echo("<script>
                         $('#question" . $i . "').click(function(){
                             $('#accessdeletebox" . $i . "').toggle();
@@ -195,6 +212,7 @@ $identificator= $_SESSION['user_id'];
                         $('#no" . $i . "').click(function(){
                             $('#accessdeletebox" . $i . "').toggle();
                         });</script>");
+                        //Die Zählvariable wird jedes mal um eins erhöht
                         $i++;
                     }
                 }
@@ -204,18 +222,17 @@ $identificator= $_SESSION['user_id'];
     </div>
 </div>
 
-            <!-- Modal -->
+            <!-- Modal zum Hinzufügen neuer Dateien aus der Ablage-->
             <div id="newfile" class="modal fade" role="dialog">
                 <div class="modal-dialog">
 
-                    <!-- Modal content-->
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal">&times;</button>
                             <h4 class="modal-title">Deine Ablage</h4>
                         </div>
                         <div class="modal-body">
-                            <p>Some text in the modal.</p>
+                            <p>Wähle die Datei aus deiner Ablage aus!</p>
                             <?php
                             require_once "logindaten.php";
 
@@ -229,6 +246,7 @@ $identificator= $_SESSION['user_id'];
                             $sql3 = "SELECT * FROM files WHERE owner='$identificator'";
                             $query3  = $db ->prepare($sql3);
                             $query3 ->execute();
+                            //Hier wird jede Datei, die der Nutzer besitzt in einem Link ausgegeben, damit diese hinzugefügt werden kann
                             while ($zeile3 = $query3->fetchObject()) {
                                 echo("<a class='btn btn-primary' href='https://mars.iuk.hdm-stuttgart.de/~df047/addfiletofolder.php?filetoadd=".$zeile3->file_id."&folderid=$folderid'>$zeile3->filename".".$zeile3->filetype</a><br>");
                             }
