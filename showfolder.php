@@ -127,7 +127,22 @@ $identificator= $_SESSION['user_id'];
                     $query4->execute();
 
                     while ($zeile4 = $query4->fetchObject()) {
-                        echo($zeile4->filename . "." . $zeile4->filetype . " - " . "<button id='question" . $i . "' type='button' class='btn btn-primary'>Entfernen</button><br>");
+                        echo("<div class='dropdown'>
+                                <button class='btn btn-primary dropdown-toggle' type='button' data-toggle='dropdown'>");
+                        echo("$zeile4->filename"."."."$zeile4->filetype");
+                        echo("<span class='caret'></span></button>
+                                <ul class='dropdown-menu'>
+                        <li>");
+                        echo("<a href='https://mars.iuk.hdm-stuttgart.de/~df047/download.php?filename=");
+                        echo("$zeile4->filename"."."."$zeile4->filetype");
+                        echo("&fileid=");
+                        echo("$zeile4->file_id"."'>");
+                        echo("Download");
+                        echo("</a></li>");
+                        echo("<li><a id='movefile' href='#' data-toggle='modal' data-target='#movefilemodal".$i."'>");
+                        echo("in Ordner verschieben");
+                        echo("</a></li>");
+                        echo("<li><a href='#' id='question" . $i . "'>Entfernen</a></li></ul></div>");
                         echo("<div hidden class='alert alert-danger' id='accessdeletebox" . $i . "'>
                           <strong>Achtung</strong> Wollen Sie diese Datei wirklich aus dem Ordner entfernen?<br>
                           (Die Datei wird nur aus dem Ordner entfernt aber befindet sich weiterhin in Ihrer Ablage.<br>
@@ -136,12 +151,48 @@ $identificator= $_SESSION['user_id'];
                           <input hidden type='text' name='filetodelete' value='" . $i . "'>
                           <input hidden type='text' name='folderid' value='" . $zeile2->folder_id . "'>
                           <input type='submit' value='JA'>
-                          
                         </form>
+                        <button id='no".$i."'>Nein</button>
                         </div>
                         ");
+                        echo("<div id='movefilemodal".$i."' class='modal fade' role='dialog'>
+                                <div class='modal-dialog'>
+                
+                                    <!-- Modal content-->
+                                    <div class='modal-content'>
+                                        <div class='modal-header'>
+                                            <button type='button' class='close' data-dismiss='modal'>&times;</button>
+                                            <h4 class='modal-title'>In welchen Ordner möchtest du die Datei verschieben?</h4>
+                                        </div>
+                                        <div class='modal-body'>
+                                            <p>Ornder auswählen:</p>");
+                        $sql5 = "SELECT * FROM folders WHERE owner='$identificator' AND NOT folder_id='$folderid'";
+                        $query5 = $db->prepare($sql5);
+                        $query5->execute();
+                            while ($zeile5 = $query5->fetchObject()) {
+                                echo("<a class='btn btn-primary' href='https://mars.iuk.hdm-stuttgart.de/~df047/movefiletofolder.php?fileid=");
+                                echo($zeile4->file_id . "&filetodelete=");
+                                echo($i . "&currentfolder=");
+                                echo($zeile2->folder_id . "&newfolder=");
+                                echo($zeile5->folder_id . "'>" . $zeile5->folder_name . "</a><br>");
+                            }
+
+
+
+                       echo("           </div>
+                                    <div class='modal-footer'>
+                                    <button type='button' class='btn btn-default' data-dismiss='modal'>Close</button>
+                                    </div>
+                                </div>
+        
+                               </div>
+                            </div>");
                         echo("<script>
                         $('#question" . $i . "').click(function(){
+                            $('#accessdeletebox" . $i . "').toggle();
+                        });</script>");
+                        echo("<script>
+                        $('#no" . $i . "').click(function(){
                             $('#accessdeletebox" . $i . "').toggle();
                         });</script>");
                         $i++;
