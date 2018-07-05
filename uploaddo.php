@@ -7,6 +7,7 @@ session_start();
     $fileSize=$_FILES["uploadfile"]["size"];
     $filePath= "mars.iuk.hdm-stuttgart.de/home/df047/public_html/uploadfiles"."$fileName";
     $owner=$_SESSION['user_id'];
+    $favorite = "0";
 
 }
 
@@ -53,7 +54,7 @@ try
 catch (PDOException $p) {
     echo("Fehler bei Aufbau der Datenbankverbindung.");
 }
-$stmt = $db ->prepare("INSERT INTO files (file_id, filename, filetype, filesize, owner, upload_date, access_rights, filepath, mimetype) VALUES('',:filename,:filetype,:filesize,$owner,CURRENT_TIMESTAMP (),'',:filepath,:mimetype)");
+$stmt = $db ->prepare("INSERT INTO files (file_id, filename, filetype, filesize, owner, upload_date, access_rights, filepath, mimetype, favorite) VALUES('',:filename,:filetype,:filesize,$owner,CURRENT_TIMESTAMP (),'',:filepath,:mimetype,0)");
 $stmt ->bindParam('filename', $namearray[0]);
 $stmt ->bindParam('filetype',$namearray[1]);
 $stmt ->bindParam('filesize', $fileSize);

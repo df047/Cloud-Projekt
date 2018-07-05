@@ -44,10 +44,12 @@ if(!isset($_SESSION['user_id'])){
             </div>
         </div>
         <ul class="list-group">
-            <li class="active"><a href="https://mars.iuk.hdm-stuttgart.de/~df047/dashboard.php">Meine Ablage</a></li>
-            <li><a href="https://mars.iuk.hdm-stuttgart.de/~df047/dashboardfreigegeben.php">Für mich freigegeben</a></li>
-            <li><a href="createfolder.php">Zuletzt verwendet (Ordner erstellen)</a></li>
-            <li><a href="#">Favoriten</a></li>
+            <li class="active"><a href="https://mars.iuk.hdm-stuttgart.de/~df047/dashboard.php"><span class="glyphicon glyphicon-book"></span>Meine Ablage</a></li>
+            <li><a href="https://mars.iuk.hdm-stuttgart.de/~df047/dashboardfreigegeben.php"><span class="glyphicon glyphicon-share-alt"></span>Für mich freigegeben</a></li>
+            <li><a href="createfolder.php">Ordner</a><span class="glyphicon glyphicon-folder-open"></span> </li>
+            <li><a href="favorite.php">Favoriten</a><span class="glyphicon glyphicon-star"></span> </li>
+            <li><a href="trash.php">Papierkorb</a><span class="glyphicon glyphicon-trash"></span> </li>
+
         </ul>
     </nav>
 
@@ -78,7 +80,6 @@ if(!isset($_SESSION['user_id'])){
                                 </div>
                             </div>
                         </form></li>
-                        <li><a href="#"><span class="glyphicon glyphicon-cog"></span> Einstellungen</a></li>
                         <li><a href="https://mars.iuk.hdm-stuttgart.de/~df047/showprofile.php"><img width=20px height=20px class="profilepicture-icon" src="https://mars.iuk.hdm-stuttgart.de/~df047/profilepictures/<?php
                                 require_once "logindaten.php";
 
@@ -139,6 +140,12 @@ if(!isset($_SESSION['user_id'])){
             echo("$zeile->file_id"."'>");
             echo("Löschen");
             echo("</a>");
+            echo("<a href='https://mars.iuk.hdm-stuttgart.de/~df047/favorite.php?filename=");
+            echo("$zeile->filename"."."."$zeile->filetype");
+            echo("&fileid=");
+            echo("$zeile->file_id"."'>");
+            echo("Favorisieren");
+            echo("</a>");
             echo("<li><a href='https://mars.iuk.hdm-stuttgart.de/~df047/accesswrite.php?fileid=".$zeile->file_id."'>Freigeben für...</a>");
             echo("<li><a href='#' id='details' data-toggle='modal' data-target='#modal"."$zeile->file_id"."'".">Details</a>");
             echo("</ul></div><br>");
@@ -179,7 +186,7 @@ if(!isset($_SESSION['user_id'])){
                 while ($zeile2 = $query2->fetchObject()) {
                     echo ($zeile2->username." - "."<button id='question".$i."' type='button' class='btn btn-primary'>Entfernen</button><br>");
 
-                    echo("<div hidden class='alert alert-danger' id='accessdeletebox".$i."'>
+                    echo("<div  class='alert alert-danger' id='accessdeletebox".$i."'>
                           <strong>Achtung</strong> Wollen sie diese Freigabe wirklich löschen?
                           <form action='accessdeletedo.php' method='post'>
                           <input hidden type='text' name='usertodelete' value='".$i."'>
@@ -190,9 +197,10 @@ if(!isset($_SESSION['user_id'])){
                         </div>
                         ");
                     echo("<script>
+                $(document).ready(function () {
                         $('#question".$i."').click(function(){
                             $('#accessdeletebox".$i."').toggle();
-                        });</script>");
+                        })});</script>");
                     $i++;
                 }
                 }
