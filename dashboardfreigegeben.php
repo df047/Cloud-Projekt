@@ -44,11 +44,11 @@ if(!isset($_SESSION['user_id'])){
             </div>
         </div>
         <ul class="list-group">
-            <li class="active"><a href="https://mars.iuk.hdm-stuttgart.de/~df047/dashboard.php"><span class="glyphicon glyphicon-book"></span>Meine Ablage</a></li>
-            <li><a href="https://mars.iuk.hdm-stuttgart.de/~df047/dashboardfreigegeben.php"><span class="glyphicon glyphicon-share-alt"></span>Für mich freigegeben</a></li>
-            <li><a href="createfolder.php">Ordner</a><span class="glyphicon glyphicon-folder-open"></span> </li>
-            <li><a href="favorite.php">Favoriten</a><span class="glyphicon glyphicon-star"></span> </li>
-            <li><a href="trash.php">Papierkorb</a><span class="glyphicon glyphicon-trash"></span> </li>
+            <li><a href="https://mars.iuk.hdm-stuttgart.de/~df047/dashboard.php"><span class="glyphicon glyphicon-book"></span>&emsp;Meine Ablage</a></li>
+            <li class="active"><a href="https://mars.iuk.hdm-stuttgart.de/~df047/dashboardfreigegeben.php"><span class="glyphicon glyphicon-share-alt"></span>&emsp;Für mich freigegeben</a></li>
+            <li><a href="createfolder.php"><span class="glyphicon glyphicon-folder-open"></span>&emsp;Ordner</a> </li>
+            <li><a href="favorite.php"><span class="glyphicon glyphicon-star"></span>&emsp;Favoriten</a></li>
+            <!--<li><a href="trash.php"><span class="glyphicon glyphicon-trash"></span>&emsp;Papierkorb</a></li>-->
 
         </ul>
     </nav>
@@ -159,6 +159,7 @@ if(!isset($_SESSION['user_id'])){
         });
 
     });
+    $('#uploadmodal').appendTo("body");
 </script>
 </body>
 </html>

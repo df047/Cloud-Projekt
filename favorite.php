@@ -44,11 +44,11 @@ if(!isset($_SESSION['user_id'])){
             </div>
         </div>
         <ul class="list-group">
-            <li class="active"><a href="https://mars.iuk.hdm-stuttgart.de/~df047/dashboard.php"><span class="glyphicon glyphicon-book"></span>Meine Ablage</a></li>
-            <li><a href="https://mars.iuk.hdm-stuttgart.de/~df047/dashboardfreigegeben.php"><span class="glyphicon glyphicon-share-alt"></span>Für mich freigegeben</a></li>
-            <li><a href="createfolder.php">Ordner</a><span class="glyphicon glyphicon-folder-open"></span> </li>
-            <li><a href="favorite.php">Favoriten</a><span class="glyphicon glyphicon-star"></span> </li>
-            <li><a href="trash.php">Papierkorb</a><span class="glyphicon glyphicon-trash"></span> </li>
+            <li><a href="https://mars.iuk.hdm-stuttgart.de/~df047/dashboard.php"><span class="glyphicon glyphicon-book"></span>&emsp;Meine Ablage</a></li>
+            <li><a href="https://mars.iuk.hdm-stuttgart.de/~df047/dashboardfreigegeben.php"><span class="glyphicon glyphicon-share-alt"></span>&emsp;Für mich freigegeben</a></li>
+            <li><a href="createfolder.php"><span class="glyphicon glyphicon-folder-open"></span>&emsp;Ordner</a> </li>
+            <li class="active"><a href="favorite.php"><span class="glyphicon glyphicon-star"></span>&emsp;Favoriten</a></li>
+            <!--<li><a href="trash.php"><span class="glyphicon glyphicon-trash"></span>&emsp;Papierkorb</a></li>-->
 
         </ul>
     </nav>
@@ -105,15 +105,68 @@ if(!isset($_SESSION['user_id'])){
     </nav>
     <div id="content">
         <div class="active">
-            <form action="createfolderdo.php" method="post">
-                <input type="text" name="foldername" value="Ordnername"><br>
-                <input type="submit" value="Erstellen">
-            </form>
+            <?php
+            require_once "logindaten.php";
+
+            try
+            {
+                $db= new PDO ($dsn,$dbuser,$dbpass);
+                $user_id = $_SESSION['user_id'];
+
+                $sql="SELECT * FROM files WHERE favorite=1 AND owner='$user_id'";
+                $query=$db->prepare($sql);
+                $query->execute();
+                while ($zeile=$query->fetchObject()){
+                    echo("<div class='dropdown'>
+                    <button class='btn btn-primary dropdown-toggle' type='button' data-toggle='dropdown'>");
+                    echo("$zeile->filename"."."."$zeile->filetype");
+                    echo("<span class='caret'></span></button>
+                    <ul class='dropdown-menu'>
+                        <li>");
+                    echo("<a href='https://mars.iuk.hdm-stuttgart.de/~df047/download.php?filename=");
+                    echo("$zeile->filename"."."."$zeile->filetype");
+                    echo("&fileid=");
+                    echo("$zeile->file_id"."'>");
+                    echo("Download");
+                    echo("</a>");
+                    echo("<a href='https://mars.iuk.hdm-stuttgart.de/~df047/delete_file.php?filename=");
+                    echo("$zeile->filename"."."."$zeile->filetype");
+                    echo("&fileid=");
+                    echo("$zeile->file_id"."'>");
+                    echo("Löschen");
+                    echo("</a>");
+                    echo("<a href='https://mars.iuk.hdm-stuttgart.de/~df047/unfavoritedo.php?filename=");
+                    echo("$zeile->filename"."."."$zeile->filetype");
+                    echo("&fileid=");
+                    echo("$zeile->file_id"."'>");
+                    echo("Entfavorisieren");
+                    echo("</a>");
+                    echo("<li><a href='https://mars.iuk.hdm-stuttgart.de/~df047/accesswrite.php?fileid=".$zeile->file_id."'>Freigeben für...</a>");
+                    echo("<li><a href='#' id='details' data-toggle='modal' data-target='#modal"."$zeile->file_id"."'".">Details</a>");
+                    echo("</ul></div><br>");
+                }
+                //echo "<hr>";
+                //$likestmt = "%"+$user_id+"%";
+                //should be '%13%' eg.
+                //$sql = "SELECT * FROM files WHERE favorite=1 AND access_rights LIKE '$likestmt'";
+                //$query=$db->prepare($sql);
+                //$query->execute();
+                //while ($zeile=$query->fetchObject()){
+                  //  echo $zeile->filename;
+                //}
+
+
+            }
+            catch (PDOException $p) {
+                echo("Fehler bei Aufbau der Datenbankverbindung.");
+            }
+
+
+
+                ?>
         </div>
     </div>
-</div>");
-}
-?>
+</div>
 </div>
 </div>
 </div>
@@ -150,6 +203,7 @@ if(!isset($_SESSION['user_id'])){
         });
 
     });
+    $('#uploadmodal').appendTo("body");
 </script>
 </body>
 </html>

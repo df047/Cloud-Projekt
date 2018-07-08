@@ -22,21 +22,35 @@ $id=$_GET["id"];
 <div class="wrapper">
     <nav id="sidebar">
         <div class="sidebar-header">
-            <button type="button" class="btn btn-outline-primary" id="upload" href="#">Datei hochladen</button>
+            <button type="button" class="btn btn-outline-primary" id="upload" data-toggle="modal" data-target="#uploadmodal">Datei hochladen</button>
         </div>
 
+        <div class="modal fade" id="uploadmodal" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Datei auswählen:</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form  hidden id="dateihochladen" action="uploaddo.php" method="post" enctype="multipart/form-data">
+                            <input type="file" name="uploadfile" id="uploadfile">
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Schließen</button>
+                                <button class="btn btn-primary" type="submit" name="submit">Datei hochladen</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
         <ul class="list-group">
-            <li>
-                <form  hidden id="dateihochladen" action="upload.php" method="post" enctype="multipart/form-data">
-                    Datei auswählen:
-                    <input type="file" name="uploadfile" id="uploadfile"><br>
-                    <input type="submit" value="Dateihochladen" name="submit">
-                </form>
-            </li>
-            <li class="active"><a href="https://mars.iuk.hdm-stuttgart.de/~df047/dashboard.php">Meine Ablage</a></li>
-            <li><a href="#">Für mich freigegeben</a></li>
-            <li><a href="#">Zuletzt verwendet</a></li>
-            <li><a href="#">Favoriten</a></li>
+            <li class="active"><a href="https://mars.iuk.hdm-stuttgart.de/~df047/dashboard.php"><span class="glyphicon glyphicon-book"></span>&emsp;Meine Ablage</a></li>
+            <li><a href="https://mars.iuk.hdm-stuttgart.de/~df047/dashboardfreigegeben.php"><span class="glyphicon glyphicon-share-alt"></span>&emsp;Für mich freigegeben</a></li>
+            <li><a href="createfolder.php"><span class="glyphicon glyphicon-folder-open"></span>&emsp;Ordner</a> </li>
+            <li><a href="favorite.php"><span class="glyphicon glyphicon-star"></span>&emsp;Favoriten</a></li>
+            <!--<li><a href="trash.php"><span class="glyphicon glyphicon-trash"></span>&emsp;Papierkorb</a></li>-->
+
         </ul>
     </nav>
 
@@ -45,7 +59,13 @@ $id=$_GET["id"];
         <div class="container-fluid">
 
             <div class="navbar-header">
-                <a class="navbar-brand" href="https://mars.iuk.hdm-stuttgart.de/~df047/dashboard.php"><img class="logo" src="bilder/Thunderstorm_weiß.png"></a>
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a id="sidebarCollapse" href="#"><img class="logo" src="bilder/Thunderstorm_weiss.png"></a>
             </div>
 
             <div class="collapse navbar-collapse" id="navbar">
@@ -61,7 +81,6 @@ $id=$_GET["id"];
                                 </div>
                             </div>
                         </form></li>
-                    <li><a href="#"><span class="glyphicon glyphicon-cog"></span> Einstellungen</a></li>
                     <li><a href="https://mars.iuk.hdm-stuttgart.de/~df047/showprofile.php"><img width=20px height=20px class="profilepicture-icon" src="https://mars.iuk.hdm-stuttgart.de/~df047/profilepictures/<?php
                             require_once "logindaten.php";
 
@@ -86,6 +105,7 @@ $id=$_GET["id"];
         </div>
     </nav>
     <div id="content">
+        <div class="active">
         <form action="updatedo.php" method="post">
             <h1>Vorname</h1><input type="text" name="vorname" value="<?php
             require_once "logindaten.php";
@@ -188,29 +208,32 @@ $id=$_GET["id"];
         $query  = $db ->prepare($sql);
         $query ->execute();
         while ($zeile = $query->fetchObject()) {
-            $check=$zeile->profilepicture;
-            if($check==""){
-                 echo ("uploadprofilepicturedo.php");
-             }
-             else{
+
                  echo ("changeprofilepicturedo.php");
-             }
-        }
+             };
+
              ?>" method="post" enctype="multipart/form-data">
             Datei auswählen:
             <input type="file" name="uploadfile" id="uploadfile"><br>
             <input type="submit" value="Hochladen" name="submit"></form>
     </div>
+    </div>
+</div>
     <script>
         $("#upload").click(function(){
             $("#dateihochladen").toggle();
         });
-    </script>
-    <script>
+        $(document).ready(function () {
+
+            $('#sidebarCollapse').on('click', function () {
+                $('#sidebar').toggleClass('active');
+                $('#content').toggleClass('active');
+            });
+
         $("#picturechange").click(function(){
             $("#profilbildhochladen").toggle();
         });
+        $('#uploadmodal').appendTo("body");
     </script>
-</div>
 </body>
 </html>

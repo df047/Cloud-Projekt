@@ -44,11 +44,11 @@ if(!isset($_SESSION['user_id'])){
             </div>
         </div>
         <ul class="list-group">
-            <li class="active"><a href="https://mars.iuk.hdm-stuttgart.de/~df047/dashboard.php"><span class="glyphicon glyphicon-book"></span>Meine Ablage</a></li>
-            <li><a href="https://mars.iuk.hdm-stuttgart.de/~df047/dashboardfreigegeben.php"><span class="glyphicon glyphicon-share-alt"></span>Für mich freigegeben</a></li>
-            <li><a href="createfolder.php">Ordner</a><span class="glyphicon glyphicon-folder-open"></span> </li>
-            <li><a href="favorite.php">Favoriten</a><span class="glyphicon glyphicon-star"></span> </li>
-            <li><a href="trash.php">Papierkorb</a><span class="glyphicon glyphicon-trash"></span> </li>
+            <li><a href="https://mars.iuk.hdm-stuttgart.de/~df047/dashboard.php"><span class="glyphicon glyphicon-book"></span>&emsp;Meine Ablage</a></li>
+            <li><a href="https://mars.iuk.hdm-stuttgart.de/~df047/dashboardfreigegeben.php"><span class="glyphicon glyphicon-share-alt"></span>&emsp;Für mich freigegeben</a></li>
+            <li class="active"><a href="createfolder.php"><span class="glyphicon glyphicon-folder-open"></span>&emsp;Ordner</a> </li>
+            <li><a href="favorite.php"><span class="glyphicon glyphicon-star"></span>&emsp;Favoriten</a></li>
+            <!--<li><a href="trash.php"><span class="glyphicon glyphicon-trash"></span>&emsp;Papierkorb</a></li>-->
 
         </ul>
     </nav>
@@ -108,12 +108,37 @@ if(!isset($_SESSION['user_id'])){
             <form action="createfolderdo.php" method="post">
                 <input type="text" name="foldername" value="Ordnername"><br>
                 <input type="submit" value="Erstellen">
-            </form>
+            </form><br>
+            <h1>Deine Ordner</h1>
+            <?php
+            $owner=$_SESSION["user_id"];
+
+            require_once "logindaten.php";
+
+            try
+            {
+                $db= new PDO ($dsn,$dbuser,$dbpass);
+            }
+            catch (PDOException $p) {
+                echo("Fehler bei Aufbau der Datenbankverbindung.");
+            }
+            $sql3 = "SELECT * FROM folders WHERE owner=$owner";
+            $query3  = $db ->prepare($sql3);
+            $query3 ->execute();
+            while ($zeile3 = $query3->fetchObject()) {
+                echo("<div class='dropdown'>
+                <button class='btn btn-primary dropdown-toggle' type='button' data-toggle='dropdown'>");
+                echo("$zeile3->folder_name");
+                echo("<span class='caret'></span></button>
+                <ul class='dropdown-menu'>
+                    ");
+                echo("<li><a href='https://mars.iuk.hdm-stuttgart.de/~df047/showfolder.php?folderid="."$zeile3->folder_id"."'>Anzeigen</a></li>");
+                echo("</ul></div><br>");}
+            ?>
         </div>
     </div>
-</div>");
-            }
-            ?>
+</div>
+
         </div>
     </div>
 </div>
@@ -150,12 +175,7 @@ if(!isset($_SESSION['user_id'])){
         });
 
     });
+    $('#uploadmodal').appendTo("body");
 </script>
 </body>
 </html>
-/**
- * Created by PhpStorm.
- * User: Leo
- * Date: 20.06.2018
- * Time: 15:21
- */
