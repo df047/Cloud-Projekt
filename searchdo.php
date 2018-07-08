@@ -101,7 +101,7 @@ if(!isset($_SESSION['user_id'])){
         <div class="list-group">
             <?php
             $searchphrase=$_GET["search"];
-
+            $owner=$_SESSION["user_id"];
             require_once "logindaten.php";
 
             try
@@ -111,15 +111,103 @@ if(!isset($_SESSION['user_id'])){
             catch (PDOException $p) {
                 echo("Fehler bei Aufbau der Datenbankverbindung.");
             }
-            $sql = "SELECT * FROM files WHERE filename LIKE '%$searchphrase%'";
+            $sql = "SELECT * FROM files WHERE owner=$owner AND filename LIKE '%$searchphrase%'";
             $query  = $db ->prepare($sql);
             $query ->execute();
             while ($zeile = $query->fetchObject()) {
-                echo("<a href='#'");
-                echo("class='list-group-item'>");
-                echo("$zeile->filename"."$zeile->filetype");
+                echo("<div class='dropdown'>
+                    <button class='btn btn-primary dropdown-toggle' type='button' data-toggle='dropdown'>");
+                echo("$zeile->filename"."."."$zeile->filetype");
+                echo("<span class='caret'></span></button>
+                    <ul class='dropdown-menu'>
+                        <li>");
+                echo("<a href='https://mars.iuk.hdm-stuttgart.de/~df047/download.php?filename=");
+                echo("$zeile->filename"."."."$owner"."."."$zeile->filetype");
+                echo("&fileid=");
+                echo("$zeile->file_id"."'>");
+                echo("Download");
                 echo("</a>");
+                echo("<a href='https://mars.iuk.hdm-stuttgart.de/~df047/delete_file.php?filename=");
+                echo("$zeile->filename"."."."$zeile->filetype");
+                echo("&fileid=");
+                echo("$zeile->file_id"."'>");
+                echo("Löschen");
+                echo("</a>");
+                echo("<a href='https://mars.iuk.hdm-stuttgart.de/~df047/favoritedo.php?filename=");
+                echo("$zeile->filename"."."."$zeile->filetype");
+                echo("&fileid=");
+                echo("$zeile->file_id"."'>");
+                echo("Favorisieren");
+                echo("</a>");
+                echo("<li><a href='https://mars.iuk.hdm-stuttgart.de/~df047/accesswrite.php?fileid=".$zeile->file_id."'>Freigeben für...</a>");
+                echo("<li><a href='#' id='details' data-toggle='modal' data-target='#modal"."$zeile->file_id"."'".">Details</a>");
+                echo("</ul></div><br>");
+                echo("<!-- Modal -->
+                    <div id=");
+                echo("'modal"."$zeile->file_id' "."class='modal fade' role='dialog'>");
+                echo("<div class='modal-dialog'>
+
+                    <!-- Modal content-->
+                    <div class='modal-content'>
+                        <div class='modal-header'>
+                            <button type='button' class='close' data-dismiss='modal'>&times;</button>
+                            <h4 class='modal-title'>");
+                echo("Details zu "."$zeile->filename."."$zeile->filetype");
+                echo("</h4>
+            </div>
+            <div class='modal-body'>
+                Dateigröße:"."$zeile->filesize<br>"."
+                Freigegeben für:<br> ");
+                $accesscode=$zeile->access_rights;
+                $userarray=explode(".",$accesscode);
+                $i=0;
+                foreach($userarray as $value){
+                    require_once "logindaten.php";
+
+                    try
+                    {
+                        $db= new PDO ($dsn,$dbuser,$dbpass);
+                    }
+                    catch (PDOException $p) {
+                        echo("Fehler bei Aufbau der Datenbankverbindung.");
+                    }
+
+                    $sql2 = "SELECT * FROM users WHERE id='$value'";
+                    $query2  = $db ->prepare($sql2);
+                    $query2 ->execute();
+
+                    while ($zeile2 = $query2->fetchObject()) {
+                        echo ($zeile2->username." - "."<button id='question".$i."' type='button' class='btn btn-primary'>Entfernen</button><br>");
+
+                        echo("<div  class='alert alert-danger' id='accessdeletebox".$i."'>
+                          <strong>Achtung</strong> Wollen sie diese Freigabe wirklich löschen?
+                          <form action='accessdeletedo.php' method='post'>
+                          <input hidden type='text' name='usertodelete' value='".$i."'>
+                          <input hidden type='text' name='fileid' value='".$zeile->file_id."'>
+                          <input type='submit' value='JA'>
+                          
+                        </form>
+                        </div>
+                        ");
+                        echo("<script>
+                $(document).ready(function () {
+                        $('#question".$i."').click(function(){
+                            $('#accessdeletebox".$i."').toggle();
+                        })});</script>");
+                        $i++;
+                    }
+                }
+                echo("
+            </div>
+            <div class='modal-footer'>
+                <button type='button' class='btn btn-default' data-dismiss='modal'>Schließen</button>
+            </div>
+            
+        </div>   
+    </div>
+</div>");
             }
+
             ?>
         </div>
     </div>
