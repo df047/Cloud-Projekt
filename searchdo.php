@@ -208,6 +208,32 @@ if(!isset($_SESSION['user_id'])){
 </div>");
             }
 
+            $owner=$_SESSION["user_id"];
+            $searchphrase=$_GET["search"];
+
+            require_once "logindaten.php";
+
+            try
+            {
+                $db= new PDO ($dsn,$dbuser,$dbpass);
+            }
+            catch (PDOException $p) {
+                echo("Fehler bei Aufbau der Datenbankverbindung.");
+            }
+            $sql3 = "SELECT * FROM folders WHERE owner=$owner AND folder_name LIKE '%$searchphrase%'";
+            $query3  = $db ->prepare($sql3);
+            $query3 ->execute();
+            while ($zeile3 = $query3->fetchObject()) {
+                echo("<div class='dropdown'>
+                <button class='btn btn-primary dropdown-toggle' type='button' data-toggle='dropdown'>");
+                echo("$zeile3->folder_name");
+                echo("<span class='caret'></span></button>
+                <ul class='dropdown-menu'>
+                    ");
+                echo("<li><a href='https://mars.iuk.hdm-stuttgart.de/~df047/deletefolder.php?folderid=".$zeile3->folder_id."'>Löschen</a></li>");
+                //folderacceswrite erstellen
+                echo("<li><a href='https://mars.iuk.hdm-stuttgart.de/~df047/showfolder.php?folderid="."$zeile3->folder_id"."'>Anzeigen</a></li>");
+                echo("</ul></div><br>");}
             ?>
         </div>
     </div>
