@@ -16,6 +16,19 @@ $id=$_GET["id"];
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <link href="dashboard3style.css" rel="stylesheet" />
+    <style>
+        input{
+            border-radius:  4px;
+            border: 1px solid grey;
+            padding: 10px 20px;
+        }
+        input:focus{
+            border-radius:  4px;
+            border: 1px solid grey;
+            padding: 10px 20px;
+            background-color: rgba(0, 22, 242, 0.09);
+        }
+    </style>
 </head>
 
 <body>
@@ -106,6 +119,8 @@ $id=$_GET["id"];
     </nav>
     <div id="content">
         <div class="active">
+            <div id="floatbox">
+            <div id="left" style="margin-right: 200px">
         <form action="updatedo.php" method="post">
             <h1>Vorname</h1><input type="text" name="vorname" value="<?php
             require_once "logindaten.php";
@@ -181,6 +196,8 @@ $id=$_GET["id"];
             ?>" hidden><br>
             <input type="submit" value="Profildaten ändern">
         </form>
+            </div>
+            <div id="right">
             <?php
             require_once "logindaten.php";
 
@@ -196,9 +213,9 @@ $id=$_GET["id"];
             $query  = $db ->prepare($sql);
             $query ->execute();
             while ($zeile = $query->fetchObject()) {
-                echo("<img class='profilepicture' width='500px' height='500' src='https://mars.iuk.hdm-stuttgart.de/~df047/profilepictures/");
+                echo("<img id='profilepicture' class='img-circle'  height='450' src='https://mars.iuk.hdm-stuttgart.de/~df047/profilepictures/");
                 echo("$zeile->profilepicture");
-                echo ("'><br>");
+                echo ("'><br><br>");
             }
             ?>
         <button type="button" class="btn btn-outline-primary" id="picturechange" href="#">Profilbild ändern oder hochladen</button>
@@ -216,10 +233,17 @@ $id=$_GET["id"];
             Datei auswählen:
             <input type="file" name="uploadfile" id="uploadfile"><br>
             <input type="submit" value="Hochladen" name="submit"></form>
+            <script>
+                $("#picturechange").click(function(){
+                    $("#profilbildhochladen").toggle();
+                });
+            </script>
+            </div>
+            </div>
     </div>
     </div>
 </div>
-    <script>
+        <script>
         $("#upload").click(function(){
             $("#dateihochladen").toggle();
         });
@@ -229,11 +253,11 @@ $id=$_GET["id"];
                 $('#sidebar').toggleClass('active');
                 $('#content').toggleClass('active');
             });
-
-        $("#picturechange").click(function(){
-            $("#profilbildhochladen").toggle();
         });
+
+
         $('#uploadmodal').appendTo("body");
     </script>
+
 </body>
 </html>

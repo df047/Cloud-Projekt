@@ -104,6 +104,8 @@ if(!isset($_SESSION['user_id'])){
         </div>
     </nav>
     <div id="content">
+        <div id="floatbox">
+            <div id="left" style="margin-right: 200px">
         <h1>Mein Profil</h1><br>
         <?php
         require_once "logindaten.php";
@@ -121,20 +123,22 @@ if(!isset($_SESSION['user_id'])){
         $query ->execute();
         while ($zeile = $query->fetchObject()) {
             echo ("<h2>$zeile->username</h2><br>");
-            echo ("<div><h1>Meine Kontaktdaten</h1><br>
+            echo ("<h1>Meine Kontaktdaten</h1><br>
                     <h3>Vorname:<br></h3>
                     $zeile->vorname<br>
-                    <h3>Vorname:<br></h3>
+                    <h3>Nachname:<br></h3>
                     $zeile->nachname<br>
                     <h3>Email-Adresse:<br></h3>
-                    $zeile->e_mail<br>
-                    <h3>Profilbild</h3><br>
-                    <img class='profilepicture' width='500px' height='500' src='https://mars.iuk.hdm-stuttgart.de/~df047/profilepictures/");
-            echo("$zeile->profilepicture");
-            echo ("'><br>");
-            echo("<a class=\"btn-primary\" href='");
+                    $zeile->e_mail<br><br><br>");
+            echo("<a class='btn btn-primary' href='");
             echo("https://mars.iuk.hdm-stuttgart.de/~df047/editprofile.php?id=".$zeile->id."'>Ändern</a>
                     </div>");
+            echo ("<div id='right'>
+                    <h3>Profilbild</h3><br>
+                    <img id='profilepicture' class='img-circle' height='450px' src='https://mars.iuk.hdm-stuttgart.de/~df047/profilepictures/");
+            echo("$zeile->profilepicture");
+            echo ("'><br></div></div>");
+
         }
         ?>
 

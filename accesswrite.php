@@ -24,21 +24,36 @@ $file=$_GET["fileid"];
 <div class="wrapper">
     <nav id="sidebar">
         <div class="sidebar-header">
-            <button type="button" class="btn btn-outline-primary" id="upload" href="#">Datei hochladen</button>
+            <button type="button" class="btn btn-outline-primary" id="upload" data-toggle="modal" data-target="#uploadmodal">Datei hochladen</button>
         </div>
 
+        <div class="modal fade" id="uploadmodal" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Datei auswählen:</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form  hidden id="dateihochladen" action="uploaddo.php" method="post" enctype="multipart/form-data">
+                            <input type="file" name="uploadfile" id="uploadfile">
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Schließen</button>
+                                <button class="btn btn-primary" type="submit" name="submit">Datei hochladen</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
         <ul class="list-group">
-            <li>
-                <form  hidden id="dateihochladen" action="uploaddo.php" method="post" enctype="multipart/form-data">
-                    Datei auswählen:
-                    <input type="file" name="uploadfile" id="uploadfile"><br>
-                    <input type="submit" value="Dateihochladen" name="submit">
-                </form>
-            </li>
-            <li class="active"><a href="https://mars.iuk.hdm-stuttgart.de/~df047/dashboard.php">Meine Ablage</a></li>
-            <li><a href="#">Für mich freigegeben</a></li>
-            <li><a href="#">Zuletzt verwendet</a></li>
-            <li><a href="#">Favoriten</a></li>
+            <div  class="active"></div>
+            <li><a href="https://mars.iuk.hdm-stuttgart.de/~df047/dashboard.php"><span class="glyphicon glyphicon-book"></span>&emsp;Meine Ablage</a></li>
+            <li><a href="https://mars.iuk.hdm-stuttgart.de/~df047/dashboardfreigegeben.php"><span class="glyphicon glyphicon-share-alt"></span>&emsp;Für mich freigegeben</a></li>
+            <li><a href="createfolder.php"><span class="glyphicon glyphicon-folder-open"></span>&emsp;Ordner</a> </li>
+            <li><a href="favorite.php"><span class="glyphicon glyphicon-star"></span>&emsp;Favoriten</a></li>
+            <!--<li><a href="trash.php"><span class="glyphicon glyphicon-trash"></span>&emsp;Papierkorb</a></li>-->
+
         </ul>
     </nav>
 
@@ -117,6 +132,7 @@ $file=$_GET["fileid"];
         });
 
     });
+    $('#uploadmodal').appendTo("body");
 </script>
 </body>
 </html>

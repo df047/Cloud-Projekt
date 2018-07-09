@@ -21,7 +21,7 @@ if(!isset($_SESSION['user_id'])){
 <div class="wrapper">
     <nav id="sidebar">
         <div class="sidebar-header">
-            <button type="button" class="btn btn-outline-primary" id="upload" data-toggle="modal" data-target="#uploadmodal">Datei hochladen</button>
+            <button type="button" class="btn btn-outline-primary" id="upload" data-toggle="modal" data-target="#uploadmodal"><span class="glyphicon glyphicon-cloud-upload"></span>&emsp;Datei hochladen</button>
         </div>
 
         <div class="modal fade" id="uploadmodal" role="dialog">
@@ -64,22 +64,21 @@ if(!isset($_SESSION['user_id'])){
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a id="sidebarCollapse" href="#"><img class="logo" src="bilder/Thunderstorm_weiss.png"></a>
+                    <a id="sidebarCollapse" href="#"><img class="logo" src="bilder/Thunderstorm_Teillogo.png"></a>
                 </div>
 
                 <div class="collapse navbar-collapse" id="navbar">
-
                     <ul class="nav navbar-nav navbar-right">
                         <li><form class="navbar-form navbar-center" action="searchdo.php">
-                            <div class="input-group col-md-12">
-                                <input type="text" name="search" class="form-control" placeholder="Search" style="width: 100%">
-                                <div class="input-group-btn">
-                                    <button class="btn btn-default" type="submit">
-                                        <i class="glyphicon glyphicon-search"></i>
-                                    </button>
+                                <div class="input-group">
+                                    <input type="text" name="search" class="form-control" placeholder="Suche" style="width: 100%">
+                                    <div class="input-group-btn">
+                                        <button class="btn btn-default" type="submit">
+                                            <i class="glyphicon glyphicon-search"></i>
+                                        </button>
+                                    </div>
                                 </div>
-                            </div>
-                        </form></li>
+                            </form></li>
                         <li><a href="https://mars.iuk.hdm-stuttgart.de/~df047/showprofile.php"><img width=20px height=20px class="profilepicture-icon" src="https://mars.iuk.hdm-stuttgart.de/~df047/profilepictures/<?php
                                 require_once "logindaten.php";
 
@@ -163,8 +162,8 @@ if(!isset($_SESSION['user_id'])){
             echo("</h4>
             </div>
             <div class='modal-body'>
-                Dateigröße:"."$zeile->filesize<br>"."
-                Freigegeben für:<br> ");
+                <strong>Dateigröße: </strong>"."$zeile->filesize"." Bytes<br><br>"."
+                <strong>Freigegeben für:</strong><br> ");
             $accesscode=$zeile->access_rights;
             $userarray=explode(".",$accesscode);
             $i=0;
@@ -186,12 +185,12 @@ if(!isset($_SESSION['user_id'])){
                 while ($zeile2 = $query2->fetchObject()) {
                     echo ($zeile2->username." - "."<button id='question".$i."' type='button' class='btn btn-primary'>Entfernen</button><br>");
 
-                    echo("<div  class='alert alert-danger' id='accessdeletebox".$i."'>
+                    echo("<div hidden class='alert alert-danger' id='accessdeletebox".$i."'>
                           <strong>Achtung</strong> Wollen sie diese Freigabe wirklich löschen?
                           <form action='accessdeletedo.php' method='post'>
                           <input hidden type='text' name='usertodelete' value='".$i."'>
                           <input hidden type='text' name='fileid' value='".$zeile->file_id."'>
-                          <input type='submit' value='JA'>
+                          <input type='submit' class='btn btn-danger btn-xs' value='JA'>
                           
                         </form>
                         </div>
@@ -204,6 +203,32 @@ if(!isset($_SESSION['user_id'])){
                     $i++;
                 }
                 }
+            echo ("<br><strong>Nicht registrierte Nutzer:</strong><br>");
+            $datei = $zeile->file_id;
+            $sql4 = "SELECT * FROM sharing WHERE file='$datei'";
+            $query4  = $db ->prepare($sql4);
+            $query4 ->execute();
+
+            $y=0;
+
+            while ($zeile4 = $query4->fetchObject()) {
+                $shareid=$zeile4->share_id;
+                echo ($zeile4->non_user." - "."<button id='nuquestion".$y."' type='button' class='btn btn-primary'>Entfernen</button><br>");
+
+                echo("<div hidden class='alert alert-danger' id='nuaccessdeletebox".$y."'>
+                          <strong>Achtung</strong> Wollen sie diese Freigabe wirklich löschen?<br>
+                          <a class='btn btn-danger btn-xs' href='https://mars.iuk.hdm-stuttgart.de/~df047/externaldelete.php?shareid=".$shareid."'>JA</a>
+                        </div>
+                        ");
+                echo("<script>
+                $(document).ready(function () {
+                        $('#nuquestion".$y."').click(function(){
+                            $('#nuaccessdeletebox".$y."').toggle();
+                        })});</script>");
+                $y++;
+
+            }
+
             echo("
             </div>
             <div class='modal-footer'>
@@ -236,6 +261,7 @@ if(!isset($_SESSION['user_id'])){
             while ($zeile3 = $query3->fetchObject()) {
             echo("<div class='dropdown'>
                 <button class='btn btn-primary dropdown-toggle' type='button' data-toggle='dropdown'>");
+                    echo ("<span class='glyphicon glyphicon-folder-close'>&emsp;</span>");
                     echo("$zeile3->folder_name");
                     echo("<span class='caret'></span></button>
                 <ul class='dropdown-menu'>
