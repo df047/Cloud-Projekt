@@ -104,7 +104,7 @@ if(!isset($_SESSION['user_id'])){
         </nav>
     <div id="content">
         <div class="active">
-            <h1>Deine Ablage</h1>
+            <h1>Meine Ablage</h1>
         <?php
         $owner=$_SESSION["user_id"];
 
@@ -132,13 +132,7 @@ if(!isset($_SESSION['user_id'])){
             echo("&fileid=");
             echo("$zeile->file_id"."'>");
             echo("Download");
-            echo("</a>");
-            echo("<a href='https://mars.iuk.hdm-stuttgart.de/~df047/delete_file.php?filename=");
-            echo("$zeile->filename"."."."$zeile->filetype");
-            echo("&fileid=");
-            echo("$zeile->file_id"."'>");
-            echo("Löschen");
-            echo("</a>");
+            echo ("<a href='#' data-toggle='modal' data-target='#deletemodal"."$zeile->file_id"."'".">Löschen</a>");
             echo("<a href='https://mars.iuk.hdm-stuttgart.de/~df047/favoritedo.php?filename=");
             echo("$zeile->filename"."."."$zeile->filetype");
             echo("&fileid=");
@@ -148,6 +142,22 @@ if(!isset($_SESSION['user_id'])){
             echo("<li><a href='https://mars.iuk.hdm-stuttgart.de/~df047/accesswrite.php?fileid=".$zeile->file_id."'>Freigeben für...</a>");
             echo("<li><a href='#' id='details' data-toggle='modal' data-target='#modal"."$zeile->file_id"."'".">Details</a>");
             echo("</ul></div><br>");
+            echo ("<div class='modal fade' id='deletemodal"."$zeile->file_id"."'"." role='dialog'>
+            <div class='modal-dialog'>
+                <div class='modal-content'>
+                    <div class='modal-header'>
+                        <button type='button' class='close' data-dismiss='modal'>&times;</button>
+                        <h4 class='modal-title'>Bist du sicher, dass du die Datei löschen möchtest?</h4>
+                    </div>
+                    
+                            <div class='modal-footer'>
+                                <button type='button' class='btn btn-default' data-dismiss='modal'>Nein</button>
+                                <a class='btn btn-primary' role='button' href='https://mars.iuk.hdm-stuttgart.de/~df047/delete_file.php?filename=".$zeile->filename.$zeile->filetype."&fileid=".$zeile->file_id."'>Ja</a>
+                            
+                    </div>
+                </div>
+            </div>
+        </div> ");
             echo("<!-- Modal -->
                     <div id=");
             echo("'modal"."$zeile->file_id' "."class='modal fade' role='dialog'>");
@@ -162,8 +172,8 @@ if(!isset($_SESSION['user_id'])){
             echo("</h4>
             </div>
             <div class='modal-body'>
-                <strong>Dateigröße: </strong>"."$zeile->filesize"." Bytes<br><br>"."
-                <strong>Freigegeben für:</strong><br> ");
+                Dateigröße:"."$zeile->filesize<br>"."
+                Freigegeben für:<br> ");
             $accesscode=$zeile->access_rights;
             $userarray=explode(".",$accesscode);
             $i=0;
@@ -185,12 +195,12 @@ if(!isset($_SESSION['user_id'])){
                 while ($zeile2 = $query2->fetchObject()) {
                     echo ($zeile2->username." - "."<button id='question".$i."' type='button' class='btn btn-primary'>Entfernen</button><br>");
 
-                    echo("<div hidden class='alert alert-danger' id='accessdeletebox".$i."'>
+                    echo("<div  class='alert alert-danger' id='accessdeletebox".$i."'>
                           <strong>Achtung</strong> Wollen sie diese Freigabe wirklich löschen?
                           <form action='accessdeletedo.php' method='post'>
                           <input hidden type='text' name='usertodelete' value='".$i."'>
                           <input hidden type='text' name='fileid' value='".$zeile->file_id."'>
-                          <input type='submit' class='btn btn-danger btn-xs' value='JA'>
+                          <input type='submit' value='JA'>
                           
                         </form>
                         </div>
@@ -203,32 +213,6 @@ if(!isset($_SESSION['user_id'])){
                     $i++;
                 }
                 }
-            echo ("<br><strong>Nicht registrierte Nutzer:</strong><br>");
-            $datei = $zeile->file_id;
-            $sql4 = "SELECT * FROM sharing WHERE file='$datei'";
-            $query4  = $db ->prepare($sql4);
-            $query4 ->execute();
-
-            $y=0;
-
-            while ($zeile4 = $query4->fetchObject()) {
-                $shareid=$zeile4->share_id;
-                echo ($zeile4->non_user." - "."<button id='nuquestion".$y."' type='button' class='btn btn-primary'>Entfernen</button><br>");
-
-                echo("<div hidden class='alert alert-danger' id='nuaccessdeletebox".$y."'>
-                          <strong>Achtung</strong> Wollen sie diese Freigabe wirklich löschen?<br>
-                          <a class='btn btn-danger btn-xs' href='https://mars.iuk.hdm-stuttgart.de/~df047/externaldelete.php?shareid=".$shareid."'>JA</a>
-                        </div>
-                        ");
-                echo("<script>
-                $(document).ready(function () {
-                        $('#nuquestion".$y."').click(function(){
-                            $('#nuaccessdeletebox".$y."').toggle();
-                        })});</script>");
-                $y++;
-
-            }
-
             echo("
             </div>
             <div class='modal-footer'>
@@ -242,7 +226,27 @@ if(!isset($_SESSION['user_id'])){
         }
 
         ?>
-            <h1>Deine Ordner</h1>
+            <h1>Deine Ordner <button id="ordnerbutton" class="btn btn-primary" data-toggle="modal" data-target="#createfolder" type="button">+</button></h1>
+            <div class="modal fade" id="createfolder" role="dialog">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Neuer Ordner</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form id="createfolder" action="createfolderdo.php" method="post">
+                                <input type="text" name="foldername" placeholder="Ordnername">
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Schließen</button>
+                                    <button class="btn btn-primary" type="submit" value="Erstellen">Erstellen</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <?php
             $owner=$_SESSION["user_id"];
 
@@ -307,6 +311,7 @@ $(document).ready(function () {
 
 });
 $('#uploadmodal').appendTo("body");
+$('#createfolder').appendTo("body");
 </script>
 </body>
 </html>

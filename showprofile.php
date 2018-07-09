@@ -21,7 +21,7 @@ if(!isset($_SESSION['user_id'])){
 <div class="wrapper">
     <nav id="sidebar">
         <div class="sidebar-header">
-            <button type="button" class="btn btn-outline-primary" id="upload" data-toggle="modal" data-target="#uploadmodal">Datei hochladen</button>
+            <button type="button" class="btn btn-outline-primary" id="upload" data-toggle="modal" data-target="#uploadmodal"><span class="glyphicon glyphicon-cloud-upload"></span>&emsp;Datei hochladen</button>
         </div>
 
         <div class="modal fade" id="uploadmodal" role="dialog">
@@ -64,7 +64,7 @@ if(!isset($_SESSION['user_id'])){
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a id="sidebarCollapse" href="#"><img class="logo" src="bilder/Thunderstorm_weiss.png"></a>
+                <a id="sidebarCollapse" href="#"><img class="logo" src="bilder/Thunderstorm_Teillogo.png"></a>
             </div>
 
             <div class="collapse navbar-collapse" id="navbar">

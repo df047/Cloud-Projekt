@@ -24,7 +24,7 @@ $file=$_GET["fileid"];
 <div class="wrapper">
     <nav id="sidebar">
         <div class="sidebar-header">
-            <button type="button" class="btn btn-outline-primary" id="upload" data-toggle="modal" data-target="#uploadmodal">Datei hochladen</button>
+            <button type="button" class="btn btn-outline-primary" id="upload" data-toggle="modal" data-target="#uploadmodal"><span class="glyphicon glyphicon-cloud-upload"></span>&emsp;Datei hochladen</button>
         </div>
 
         <div class="modal fade" id="uploadmodal" role="dialog">
@@ -68,7 +68,7 @@ $file=$_GET["fileid"];
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a id="sidebarCollapse" href="#"><img class="logo" src="bilder/Thunderstorm_weiss.png"></a>
+                <a id="sidebarCollapse" href="#"><img class="logo" src="bilder/Thunderstorm_Teillogo.png"></a>
             </div>
 
             <div class="collapse navbar-collapse" id="navbar">
@@ -84,7 +84,6 @@ $file=$_GET["fileid"];
                                 </div>
                             </div>
                         </form></li>
-                    <li><a href="#"><span class="glyphicon glyphicon-cog"></span> Einstellungen</a></li>
                     <li><a href="https://mars.iuk.hdm-stuttgart.de/~df047/showprofile.php"><img width=20px height=20px class="profilepicture-icon" src="https://mars.iuk.hdm-stuttgart.de/~df047/profilepictures/<?php
                             require_once "logindaten.php";
 

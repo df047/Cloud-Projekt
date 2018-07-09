@@ -23,7 +23,7 @@ $identificator= $_SESSION['user_id'];
 <div class="wrapper">
     <nav id="sidebar">
         <div class="sidebar-header">
-            <button type="button" class="btn btn-outline-primary" id="upload" data-toggle="modal" data-target="#uploadmodal">Datei hochladen</button>
+            <button type="button" class="btn btn-outline-primary" id="upload" data-toggle="modal" data-target="#uploadmodal"><span class="glyphicon glyphicon-cloud-upload"></span>&emsp;Datei hochladen</button>
         </div>
 
         <div class="modal fade" id="uploadmodal" role="dialog">
@@ -66,7 +66,7 @@ $identificator= $_SESSION['user_id'];
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a id="sidebarCollapse" href="#"><img class="logo" src="bilder/Thunderstorm_weiss.png"></a>
+                <a id="sidebarCollapse" href="#"><img class="logo" src="bilder/Thunderstorm_Teillogo.png"></a>
             </div>
 
             <div class="collapse navbar-collapse" id="navbar">
@@ -82,7 +82,6 @@ $identificator= $_SESSION['user_id'];
                                 </div>
                             </div>
                         </form></li>
-                    <li><a href="#"><span class="glyphicon glyphicon-cog"></span> Einstellungen</a></li>
                     <li><a href="https://mars.iuk.hdm-stuttgart.de/~df047/showprofile.php"><img width=20px height=20px class="profilepicture-icon" src="https://mars.iuk.hdm-stuttgart.de/~df047/profilepictures/<?php
                             require_once "logindaten.php";
 
@@ -123,9 +122,9 @@ $identificator= $_SESSION['user_id'];
             $query2  = $db ->prepare($sql2);
             $query2 ->execute();
             while ($zeile2 = $query2->fetchObject()) {
-                echo("<h1>" . "$zeile2->folder_name" . "</h1><br>");
+                echo("<h1>" . "<span class='glyphicon glyphicon-folder-close'>&emsp;</span>"."$zeile2->folder_name" . "</h1><br>");
                 //Button zum hinzufügen von Dateien wird geladen, öffnet das Modal #newfile weiter unten
-                echo("<button type='button' class='btn' id='newfilebutton' data-toggle='modal' data-target='#newfile'>+</button><br>");
+                echo("<button type='button' class='btn' id='newfilebutton' data-toggle='modal' data-target='#newfile'>Datei hinzufügen</button><br><br>");
                 /*Um die einzelnen Dateien anzeigen zu lassen, wird der Filecode, der beschreibt welche
                 Dateien sich im Ordner befinden in seine Einzelteile durch explode() in ein Array aufgespalten*/
                 $filearray = explode(".", $zeile2->file_code);

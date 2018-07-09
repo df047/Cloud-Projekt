@@ -21,7 +21,7 @@ if(!isset($_SESSION['user_id'])){
 <div class="wrapper">
     <nav id="sidebar">
         <div class="sidebar-header">
-            <button type="button" class="btn btn-outline-primary" id="upload" data-toggle="modal" data-target="#uploadmodal">Datei hochladen</button>
+            <button type="button" class="btn btn-outline-primary" id="upload" data-toggle="modal" data-target="#uploadmodal"><span class="glyphicon glyphicon-cloud-upload"></span>&emsp;Datei hochladen</button>
         </div>
 
         <div class="modal fade" id="uploadmodal" role="dialog">
@@ -64,7 +64,7 @@ if(!isset($_SESSION['user_id'])){
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a id="sidebarCollapse" href="#"><img class="logo" src="bilder/Thunderstorm_weiss.png"></a>
+                <a id="sidebarCollapse" href="#"><img class="logo" src="bilder/Thunderstorm_Teillogo.png"></a>
             </div>
 
             <div class="collapse navbar-collapse" id="navbar">
@@ -105,11 +105,26 @@ if(!isset($_SESSION['user_id'])){
     </nav>
     <div id="content">
         <div class="active">
-            <form action="createfolderdo.php" method="post">
-                <input type="text" name="foldername" value="Ordnername"><br>
-                <input type="submit" value="Erstellen">
-            </form><br>
-            <h1>Deine Ordner</h1>
+            <h1>Deine Ordner <button id="ordnerbutton" class="btn btn-primary" data-toggle="modal" data-target="#createfolder" type="button">+</button></h1>
+            <div class="modal fade" id="createfolder" role="dialog">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Neuer Ordner</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form id="createfolder" action="createfolderdo.php" method="post">
+                                <input type="text" name="foldername" placeholder="Ordnername">
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Schließen</button>
+                                    <button class="btn btn-primary" type="submit" value="Erstellen">Erstellen</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <?php
             $owner=$_SESSION["user_id"];
 
@@ -128,10 +143,12 @@ if(!isset($_SESSION['user_id'])){
             while ($zeile3 = $query3->fetchObject()) {
                 echo("<div class='dropdown'>
                 <button class='btn btn-primary dropdown-toggle' type='button' data-toggle='dropdown'>");
+                echo ("<span class='glyphicon glyphicon-folder-close'>&emsp;</span>");
                 echo("$zeile3->folder_name");
                 echo("<span class='caret'></span></button>
                 <ul class='dropdown-menu'>
                     ");
+                echo("<li><a href='https://mars.iuk.hdm-stuttgart.de/~df047/deletefolder.php?folderid=".$zeile3->folder_id."'>Löschen</a></li>");
                 echo("<li><a href='https://mars.iuk.hdm-stuttgart.de/~df047/showfolder.php?folderid="."$zeile3->folder_id"."'>Anzeigen</a></li>");
                 echo("</ul></div><br>");}
             ?>

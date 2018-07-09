@@ -21,7 +21,7 @@ if(!isset($_SESSION['user_id'])){
 <div class="wrapper">
     <nav id="sidebar">
         <div class="sidebar-header">
-            <button type="button" class="btn btn-outline-primary" id="upload" data-toggle="modal" data-target="#uploadmodal">Datei hochladen</button>
+            <button type="button" class="btn btn-outline-primary" id="upload" data-toggle="modal" data-target="#uploadmodal"><span class="glyphicon glyphicon-cloud-upload"></span>&emsp;Datei hochladen</button>
         </div>
 
         <div class="modal fade" id="uploadmodal" role="dialog">
@@ -58,7 +58,7 @@ if(!isset($_SESSION['user_id'])){
             <div class="container-fluid">
 
                 <div class="navbar-header">
-                    <a id="sidebarCollapse" href="#"><img class="logo" src="bilder/Thunderstorm_weiss.png"></a>
+                    <a id="sidebarCollapse" href="#"><img class="logo" src="bilder/Thunderstorm_Teillogo.png"></a>
                 </div>
 
                 <div class="collapse navbar-collapse" id="navbar">
@@ -226,6 +226,7 @@ if(!isset($_SESSION['user_id'])){
             while ($zeile3 = $query3->fetchObject()) {
                 echo("<div class='dropdown'>
                 <button class='btn btn-primary dropdown-toggle' type='button' data-toggle='dropdown'>");
+                echo ("<span class='glyphicon glyphicon-folder-close'>&emsp;</span>");
                 echo("$zeile3->folder_name");
                 echo("<span class='caret'></span></button>
                 <ul class='dropdown-menu'>
