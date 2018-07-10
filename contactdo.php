@@ -37,29 +37,31 @@
 
     <div class="container">
 
-        <div class=""starter-template">
+        <div class="starter-template">
         <h1>Kontaktformular</h1>
-        <p> class="lead">Sie dieses Formular um mit uns in Kontakt zu treten.</p>
-        <div class=""col-md-6">
-        <form>
-            <div class="form-group">
+        <p> Nutzen Sie dieses Formular um mit uns in Kontakt zu treten.</p>
+        <div class="row">
+            <div class=""col-md-6">
+            <div id=""erfolgsmeldung"></div>
+            <form id="frmKontakt">
+            <div class="form-group" id="frmGrpVorname">
                 <label for="vorname" class="control-label">Vorname</label>
                 <input type="text" class="form-control" id="vorname" placeholder="Max">
             </div>
-            <div class="form-group">
+            <div class="form-group" id="frmGrpNachname">
                 <label for="Nachname" class="control-label">Nachname</label>
                 <input type="text" class="form-control" id="Nachname" placeholder="Mustermann">
             </div>
-            <div class="form-group">
+            <div class="form-group" id="frmGrpEmail">
                 <label for="email" class="control-label">E-Mail Adresse</label>
                 <input type="text" class="form-control" id="email" placeholder="max@mustermann.de">
             </div>
-            <div class="form-group">
+            <div class="form-group" id="frmGrpTelefon">
                 <label for="telefon" class="control-label">Telefonnummer</label>
                 <input type="text" class="form-control" id="email" placeholder="0711 / 00000000">
             </div>
 
-            <div class="form-group">
+            <div class="form-group" id="frmGrpNachricht">
                 <label for="nachricht" class="control-label">Ihr Nachricht an das Thunderstorm-Team</label>
                 <textarea id="nachricht" class="form-control" rows="5" placeholder="Hier Ihre Nachricht schreiben..."></textarea>
             </div>
@@ -67,20 +69,14 @@
                 <button type="submit" class="btn btn-primary">Abschicken</button>
             </div>
 
+
         </form>
-
-
-
+        </div>
+        </div>
     </div>
 
 
-
-</body>
-
-
-</div>
-
-
+    </div>
 
 
 
@@ -111,3 +107,103 @@
     </div>
 </footer>
 </div>
+
+
+
+<script>
+    // Kontrolle was eingegeben wurde (Mit #id .vorbereitete jQuery Funktion submit)
+    $('#frmKontakt').submit(function() {
+
+        // Variable in der das Ergebnis von der Formularkontrolle gespeichert werden
+        var_formControl = true;
+
+        // Jede Formgroup bekommt eine eigene Variable
+        var_frmGrpVorname = $('#frmGrpVorname');
+        var_frmGrpNachname = $('#frmGrpNachname');
+        var_frmGrpEmail = $('#frmGrpEmail');
+        var_frmGrpTelefon = $('#frmGrpTelefon');
+        var_frmGrpNachricht = $('#frmGrpNachricht');
+
+
+
+        //Klasse wird stets nach dem checken zurückgesetzt
+
+        var_frmGrpVorname.removeClass('has-error');
+        var_frmGrpNachname.removeClass('has-error');
+        var_frmGrpEmail.removeClass('has-error');
+        var_frmGrpTelefon.removeClass('has-error');
+        var_frmGrpNachricht.removeClass('has-error');
+
+
+        // Inhalte der Formularfelder mit id des Inputfelds + .val als vorgegbenen jQuery Funktion, die uns den Inhalt des Inputfelds wieder gibt und in die Variable bringt
+
+        var vorname = $('#vorname').val();
+        var nachname = $('#nachname').val();
+        var email = $('#email').val();
+        var telefon = $('#telefon').val();
+        var nachricht = $('#nachricht').val();
+
+
+        // Inhalte werden kontrolliert
+
+        //falls hier schon kein Inhalt drin, wird formControl auf false gesetzt (Pflichtfelder!)
+        if (vorname == '') {
+            formControl = false;
+            // Dur vordefinierte Bootstrapklasse wird das Formularfeld rot
+            var_frmGrpVorname.addClass('has-error');
+        }
+
+        if (vorname == '') {
+            formControl = false;
+            // Durch vordefinierte Bootstrapklasse wird das Formularfeld rot
+            var_frmGrpNachname.addClass('has-error');
+        }
+
+        if (vorname == '') {
+            formControl = false;
+            // Durch vordefinierte Bootstrapklasse wird das Formularfeld rot
+            var_frmGrpEmail.addClass('has-error');
+        }
+
+
+        if (vorname == '') {
+            formControl = false;
+            // Durch vordefinierte Bootstrapklasse wird das Formularfeld rot
+            var_frmGrpNachricht.addClass('has-error');
+        }
+
+
+
+        //Wenn formControl wahr ist, mache folgendes
+        if(formControl) {
+            $.ajax({
+
+                //Werden mittels Post übermittelt
+                type: 'POST',
+
+                // Wo soll es hingesendet werden
+                url:'contactsend.php',
+
+                // Variablen müssen übergeben werden (Die Variable die über POST versendet wird hat den Namen vorname:Inhalt aus der JavaScript Variablen
+                data: { vorname:vorname, nachname:nachname, email:email, telefon:telefon, nachricht:nachricht }
+            }).done(function(message) {
+                var erfolgsmeldung = $('#erfolgsmeldung');
+
+                //Message von der PHP Datei wird übergeben
+                erfolgsmeldung.html(message);
+
+                //Die Classen Alert + Alert Sucess werden hinzugefügt
+                erfolgsmeldung.addClass('alert');
+                erfolgsmeldung.addClass('alert-success');
+
+            });
+        }
+
+        return false;
+    });
+
+
+</script>
+
+
+</body>
