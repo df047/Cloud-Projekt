@@ -16,20 +16,28 @@ $directory= "/home/df047/public_html/uploadfiles";
             $sql="SELECT * FROM files WHERE file_id='$file'";
             $query=$db->prepare($sql);
             $query->execute();
+            $favorite=0;
             while ($zeile=$query->fetchObject()) {
-                $mimetype=$zeile->mimetype;
+
+                $favorite=$zeile->favorite;
             }
 
 
 
-if ($_GET["favorite"]="1")
+if ($favorite==1)
     {
         echo " Sie haben diese Datei bereits favorisiert";
         die();
     }
-else
+else if($favorite==0)
     {
-        $favorite = $i + 1;
+        echo "Die Datei wurde favorisiert";
+        $sql = "UPDATE files SET favorite=1 WHERE file_id='$file'";
+        $query=$db->prepare($sql);
+        $query->execute();
+    }
+    else{
+                echo "Fehler typ nicht gefunden";
     }
 
 
