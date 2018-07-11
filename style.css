@@ -1,6 +1,12 @@
-﻿html, body {
+﻿@import url('https://fonts.googleapis.com/css?family=Raleway:300,400,500,700,800');
+
+html, body {
     height:100%;
     width: 100%;
+}
+
+body {
+    font-family: 'Raleway', sans-serif;
 }
 
 .navbar {
@@ -9,7 +15,7 @@
     font-size: 1.2em;
 }
 
-.navbar-brand {
+.navbar-logo {
     min-height: 40px;
     padding: 0 15px 5px;
 }
@@ -34,7 +40,7 @@
     position: relative;
     width: 100%;
     background-size: cover;
-
+    padding: 80px
 }
 
 #Contact
@@ -52,14 +58,19 @@
     background-color: #060076;
 }
 
-#logingross {
-
-    background-color: #060076;
-
+#loginbutton:hover {
+    background-color: #080099;
 }
 
+#loginbuttonbig {
+    background-color: #060076;
+}
 
-#home {
+#loginbuttonbig:hover {
+    background-color: #080099;
+}
+
+#startseite {
     background: url(bilder/Startbild_1.jpg) repeat center center fixed;
     display: table;
     height: 100%;
@@ -79,18 +90,14 @@
     font-weight: 700;
 }
 
-.padding {
-    padding: 80px 0;
-}
 
 .Leo {
-    float: left;
     width: 100%;
     padding-left: 0%;
     padding-top: 15%;
 }
 
-#fixed {
+#register {
     background: url("bilder/desk-3139127_1920.jpg")no-repeat center center fixed;
     display: table;
     height: 100%;
@@ -122,10 +129,6 @@ footer {
     max-width: 150px;
 }
 
-.wrapper {
-    margin-top: 180px;
-    margin-bottom: 20px;
-}
 
 .form-signin {
     max-width: 420px;
@@ -145,19 +148,6 @@ footer {
     font-size: 16px;
     height: auto;
     padding: 10px;
-}
-
-input[type="text"] {
-    margin-bottom: 0px;
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
-
-}
-
-input[type="password"] {
-    margin-bottom: 20px;
-    border-top-left-radius: 0;
-    border-top-right-radius: 0;
 }
 
 
@@ -181,27 +171,90 @@ input[type="password"] {
 
 #password_forgotdo {
     margin-top: 20px;
+    background-color: #060076;
+}
+
+#password_forgotdo:hover {
+    background-color: #080099;
+}
+
+#password_renew {
+    margin-top: 20px;
+    background-color: #060076;
+}
+
+#password_renew:hover {
+    background-color: #080099;
 }
 
 .loginfeld {
     max-width: 420px;
     margin: 0 auto;
     background-color: rgba(224, 224, 224, 0.7);
+    margin-top: 180px;
 }
 
 
 
-#registerbutton
-
-{
+#registerbutton {
     margin-left: 3%;
     margin-top: 5%;
     background-color: #060076;
+}
 
-
+#registerbutton:hover {
+    background-color: #080099;
 }
 
 #footerimage {
     text-align: center;
     max-width: 150px;
+}
+
+.fa-facebook:hover
+
+{
+    color: #060076;
+
+}
+
+.fa-twitter:hover
+
+{
+    color: #060076;
+
+}
+
+.fa-instagram:hover
+
+{
+    color: #060076;
+
+}
+.kontaktfeld {
+    max-width: 620px;
+    margin: 0 auto;
+    background-color: rgba(224, 224, 224, 0.7);
+    margin-top: 60px;
+}
+
+#formkontakt {
+    max-width: 520px;
+    margin: 0 auto;
+}
+
+.passwordconfirm {
+    text-align: center;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    padding-left: 38px;
+    padding-right: 38px;
+    margin: 0 auto;
+}
+
+.passwordfeld{
+    max-width: 600px;
+    margin: 0 auto;
+    background-color: rgba(224, 224, 224, 0.7);
+    margin-top: 320px;
 }

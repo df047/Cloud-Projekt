@@ -76,6 +76,7 @@ if(count($row)==0) {
     "Es wurde eine Änderung des Kennworts Ihres Thunderstorm-Kontos angefordert. Wenn Sie das waren, können Sie Ihr Passwort hier neu festlegen:"
         .$url_passwortcode;
     mail($empfaenger,$betreff,$text,$absender);
-    echo "Ein Link wurde soeben an die von Ihnen angegebene E-Mail-Adresse versendet";
+
+    header("Location: https://mars.iuk.hdm-stuttgart.de/~df047/emailreceived.html");
 
 }

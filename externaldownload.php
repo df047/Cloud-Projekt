@@ -12,22 +12,21 @@
 
 <body>
 
-<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+<nav class="navbar navbar-default navbar-fixed-top"">
     <div class="container-fluid">
         <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-main">
-                <span class="sr-only">Toggle navigation</span>
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="index.html#"><img class="bild1" src="bilder/Thunderstorm_Volllogo_Ohne-Hintergrund.png">
+            <a class="navbar-logo" href="index.html#"><img class="bild1" src="bilder/Thunderstorm_Volllogo_Ohne-Hintergrund.png">
             </a>
         </div>
-        <div class="collapse navbar-collapse" id="navbar-collapse-main">
+        <div class="collapse navbar-collapse" id="navbar">
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="index.html#über">Über</a> </li>
-                <li><a href="index.html#bottom">Kontakt</a></li>
+                <li><a href="contactdo.php">Kontakt</a></li>
                 <li><a href="index.html#register1">Registrieren</a> </li>
                 <a href="index.html#"><button id="loginbutton" type="button" class="btn btn-primary">Login</button></a>
             </ul>
@@ -35,7 +34,7 @@
     </div>
 </nav>
 
-<div id = "home">
+<div id = "startseite">
     <div class="wrapper">
         <div class="loginfeld" id="downloadarea">
 <?php

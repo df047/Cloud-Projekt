@@ -1,6 +1,6 @@
-<div class="container">
-
-    <head>
+<!DOCTYPE html>
+<html>
+<head>
         <title>Thunderstorm</title>
         <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -15,72 +15,64 @@
     <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
         <div class="container-fluid">
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-main">
-                    <span class="sr-only">Toggle navigation</span>
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.html#"><img class="bild1" src="bilder/Thunderstorm_Volllogo_Ohne-Hintergrund.png">
+                <a class="navbar-logo" href="index.html"><img class="bild1" src="bilder/Thunderstorm_Volllogo_Ohne-Hintergrund.png">
                 </a>
             </div>
-            <div class="collapse navbar-collapse" id="navbar-collapse-main">
+            <div class="collapse navbar-collapse" id="navbar">
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="index.html#über">Über</a> </li>
-                    <li><a href="index.html#bottom">Kontakt</a></li>
+                    <li><a href="index.html#über">Über uns</a> </li>
                     <li><a href="index.html#register1">Registrieren</a> </li>
-                    <a href="index.html#"><button id="loginbutton" type="button" class="btn btn-primary">Login</button></a>
+                    <li><a href="contactdo.php">Kontakt</a></li>
+                    <li> </li><a href="index.html"><button id="loginbutton" type="button" class="btn btn-primary">Login</button></a> </li>
                 </ul>
             </div>
         </div>
     </nav>
 
-    <div class="container">
+    <div id = "startseite">
+        <div class="container">
+        <div class="kontaktfeld">
+            <div class="row">
+                <form id="formkontakt" action="contactsend.php" method="post">
+                    <h1 class="col-lg-12">Kontaktformular</h1>
+                    <p class="col-lg-12"> Nutzen Sie dieses Formular um mit uns in Kontakt zu treten.</p>
+                    <div class="form-group col-lg-12">
+                        <label for="vorname" class="control-label">Vorname</label>
+                        <input type="text" class="form-control" name="vorname" placeholder="Max">
+                    </div>
+                    <div class="form-group col-lg-12">
+                        <label for="Nachname" class="control-label">Nachname</label>
+                        <input type="text" class="form-control" name="nachname" placeholder="Mustermann">
+                    </div>
+                    <div class="form-group col-lg-12">
+                        <label for="email" class="control-label">E-Mail Adresse</label>
+                        <input type="email" class="form-control" name="email" placeholder="max@mustermann.de">
+                    </div>
+                    <div class="form-group col-lg-12">
+                        <label for="telefon" class="control-label">Telefonnummer</label>
+                        <input type="text" class="form-control" name="telefon" placeholder="0711 / 00000000">
+                    </div>
 
-        <div class="starter-template">
-        <h1>Kontaktformular</h1>
-        <p> Nutzen Sie dieses Formular um mit uns in Kontakt zu treten.</p>
-        <div class="row">
-            <div class=""col-md-6">
-            <div id=""erfolgsmeldung"></div>
-            <form id="frmKontakt">
-            <div class="form-group" id="frmGrpVorname">
-                <label for="vorname" class="control-label">Vorname</label>
-                <input type="text" class="form-control" id="vorname" placeholder="Max">
-            </div>
-            <div class="form-group" id="frmGrpNachname">
-                <label for="Nachname" class="control-label">Nachname</label>
-                <input type="text" class="form-control" id="Nachname" placeholder="Mustermann">
-            </div>
-            <div class="form-group" id="frmGrpEmail">
-                <label for="email" class="control-label">E-Mail Adresse</label>
-                <input type="text" class="form-control" id="email" placeholder="max@mustermann.de">
-            </div>
-            <div class="form-group" id="frmGrpTelefon">
-                <label for="telefon" class="control-label">Telefonnummer</label>
-                <input type="text" class="form-control" id="email" placeholder="0711 / 00000000">
-            </div>
-
-            <div class="form-group" id="frmGrpNachricht">
-                <label for="nachricht" class="control-label">Ihr Nachricht an das Thunderstorm-Team</label>
-                <textarea id="nachricht" class="form-control" rows="5" placeholder="Hier Ihre Nachricht schreiben..."></textarea>
-            </div>
-            <div class="form-group">
-                <button type="submit" class="btn btn-primary">Abschicken</button>
-            </div>
+                    <div class="form-group col-lg-12">
+                        <label for="nachricht" class="control-label">Ihre Nachricht an das Thunderstorm-Team</label>
+                        <textarea name="nachricht" class="form-control" rows="5" placeholder="Hier Ihre Nachricht schreiben..."></textarea>
+                    </div>
+                    <div class="form-group col-lg-4">
+                        <button type="submit" id="loginbuttonbig" class="btn btn-primary">Abschicken</button>
+                    </div>
 
 
-        </form>
+                </form>
+
+            </div>
         </div>
         </div>
     </div>
-
-
-    </div>
-
-
-
-
 
 
 
@@ -96,114 +88,19 @@
         </div>
         <div class="col-sm-4">
             <h3>Social Media</h3>
-            <a href="#" class="fa fa-facebook"></a>
-            <a href="#" class="fa fa-twitter"></a>
-            <a href="#" class="fa fa-google"></a>
-            <a href="#" class="fa fa-instagram"></a>
+            <a href="https://www.facebook.com/Infothunderstorm-194163804553989/" class="fa fa-facebook"></a>
+            <a href="https://www.twitter.com/thunderstorm_tw" class="fa fa-twitter"></a>
+            <a href="https://www.instagram.com/info.thunderstorm/" class="fa fa-instagram"></a>
         </div>
         <div class="col-sm-4">
             <img id="footerimage" src="bilder/Thunderstorm_Teillogo.png">
         </div>
     </div>
 </footer>
-</div>
 
 
 
-<script>
-    // Kontrolle was eingegeben wurde (Mit #id .vorbereitete jQuery Funktion submit)
-    $('#frmKontakt').submit(function() {
 
-        // Variable in der das Ergebnis von der Formularkontrolle gespeichert werden
-        var_formControl = true;
-
-        // Jede Formgroup bekommt eine eigene Variable
-        var_frmGrpVorname = $('#frmGrpVorname');
-        var_frmGrpNachname = $('#frmGrpNachname');
-        var_frmGrpEmail = $('#frmGrpEmail');
-        var_frmGrpTelefon = $('#frmGrpTelefon');
-        var_frmGrpNachricht = $('#frmGrpNachricht');
-
-
-
-        //Klasse wird stets nach dem checken zurückgesetzt
-
-        var_frmGrpVorname.removeClass('has-error');
-        var_frmGrpNachname.removeClass('has-error');
-        var_frmGrpEmail.removeClass('has-error');
-        var_frmGrpTelefon.removeClass('has-error');
-        var_frmGrpNachricht.removeClass('has-error');
-
-
-        // Inhalte der Formularfelder mit id des Inputfelds + .val als vorgegbenen jQuery Funktion, die uns den Inhalt des Inputfelds wieder gibt und in die Variable bringt
-
-        var vorname = $('#vorname').val();
-        var nachname = $('#nachname').val();
-        var email = $('#email').val();
-        var telefon = $('#telefon').val();
-        var nachricht = $('#nachricht').val();
-
-
-        // Inhalte werden kontrolliert
-
-        //falls hier schon kein Inhalt drin, wird formControl auf false gesetzt (Pflichtfelder!)
-        if (vorname == '') {
-            formControl = false;
-            // Dur vordefinierte Bootstrapklasse wird das Formularfeld rot
-            var_frmGrpVorname.addClass('has-error');
-        }
-
-        if (vorname == '') {
-            formControl = false;
-            // Durch vordefinierte Bootstrapklasse wird das Formularfeld rot
-            var_frmGrpNachname.addClass('has-error');
-        }
-
-        if (vorname == '') {
-            formControl = false;
-            // Durch vordefinierte Bootstrapklasse wird das Formularfeld rot
-            var_frmGrpEmail.addClass('has-error');
-        }
-
-
-        if (vorname == '') {
-            formControl = false;
-            // Durch vordefinierte Bootstrapklasse wird das Formularfeld rot
-            var_frmGrpNachricht.addClass('has-error');
-        }
-
-
-
-        //Wenn formControl wahr ist, mache folgendes
-        if(formControl) {
-            $.ajax({
-
-                //Werden mittels Post übermittelt
-                type: 'POST',
-
-                // Wo soll es hingesendet werden
-                url:'contactsend.php',
-
-                // Variablen müssen übergeben werden (Die Variable die über POST versendet wird hat den Namen vorname:Inhalt aus der JavaScript Variablen
-                data: { vorname:vorname, nachname:nachname, email:email, telefon:telefon, nachricht:nachricht }
-            }).done(function(message) {
-                var erfolgsmeldung = $('#erfolgsmeldung');
-
-                //Message von der PHP Datei wird übergeben
-                erfolgsmeldung.html(message);
-
-                //Die Classen Alert + Alert Sucess werden hinzugefügt
-                erfolgsmeldung.addClass('alert');
-                erfolgsmeldung.addClass('alert-success');
-
-            });
-        }
-
-        return false;
-    });
-
-
-</script>
 
 
 </body>
