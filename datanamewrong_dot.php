@@ -104,13 +104,14 @@ if(!isset($_SESSION['user_id'])){
 </nav>
 <div id="content">
     <div class="active">
-        <h1>Fehler beim Upload</h1>
+
+        <h1><strong>FEHLER BEIM DATEIUPLOAD</strong></h1>
+        <br>
         <?php
-        echo("Der Dateiname ist ungültig. Bitte keine Punkte im Dateinamen.");
-        echo("<a  href='https://mars.iuk.hdm-stuttgart.de/~df047/dashboard.php'>Hier geht es wieder zurück zum Dashboard</a>");
-
-
+        echo("Der Dateiname ist ungültig. Bitte keine Punkte im Dateinamen. <br><br><br>");
+        echo("<a class='btn btn-primary' href='https://mars.iuk.hdm-stuttgart.de/~df047/dashboard.php'>Zurück zum Dashboard</a>");
         ?>
+
     </div>
 </div>
 

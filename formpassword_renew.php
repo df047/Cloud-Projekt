@@ -162,7 +162,9 @@ if($resArray != null){
             <a href="https://www.instagram.com/info.thunderstorm/" class="fa fa-instagram"></a>
         </div>
         <div class="col-sm-4">
-            <img id="footerimage" src="bilder/Thunderstorm_Teillogo.png">
+            <a href="index.html#">
+                <img id="footerimage" src="bilder/Thunderstorm_Teillogo.png">
+            </a>
         </div>
     </div>
 </footer>

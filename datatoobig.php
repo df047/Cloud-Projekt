@@ -104,13 +104,14 @@ if(!isset($_SESSION['user_id'])){
 </nav>
 <div id="content">
     <div class="active">
-        <h1>Fehler beim Upload</h1>
+
+        <h1><strong>FEHLER BEIM DATEIUPLOAD</strong></h1>
+        <br>
         <?php
-            echo("Die Dateigröße überschreitet die maximale Uploadgröße von 8 MB.");
-            echo("<a  href='https://mars.iuk.hdm-stuttgart.de/~df047/dashboard.php'>Hier geht es wieder zurück zum Dashboard</a>");
-
-
+        echo("Die Dateigröße überschreitet die maximale Uploadgröße von 25 MB. <br><br><br>");
+        echo("<a class='btn btn-primary' href='https://mars.iuk.hdm-stuttgart.de/~df047/dashboard.php'>Zurück zum Dashboard</a>");
         ?>
+
     </div>
 </div>
 

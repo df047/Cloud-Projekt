@@ -1,28 +1,27 @@
 <?php
 
-$vorname = $_POST ('vorname');
-$nachname = $_POST ('nachname');
-$email = $_POST ('email');
-$telefon = $_POST ('telefon');
-$nachricht = $_POST ('nachricht');
+$vorname = $_POST ['vorname'];
+$nachname = $_POST ['nachname'];
+$email = $_POST ['email'];
+$telefon = $_POST ['telefon'];
+$nachricht = $_POST ['nachricht'];
 
 
 
 $empfänger = "info.thunderstorm@mail.de";
-$absendername = "Kontaktformular";
+$absendername = "$vorname"."."."$nachname";
 $absenderemail = $email;
 $betreff = "Neue Nachricht über Kontaktformular";
 $text = "Es ist eine neue Nachricht über das Kontaktformular eingetroffen. Folgende Daten wurden übermittelt:
 
 Name, Vorname: ".$nachname.", ".$vorname."
 E-Mail: ".$email."
-Telefonnummer: ".telefon."
-Nachricht:
-".nachricht.;
-mail($empfänger, $betreff, $text, "From: $absender <$ansemdermail>");
+Telefonnummer: ".$telefon."
+Nachricht:".$nachricht;
+mail($empfänger, $betreff, $text, "From: $absendername <$absendermail>");
 
 
-echo('Vielen Dank! Das Thunderstorm-Team meldet sich schnellstmöglich bei Ihnen');
+header("Location: https://mars.iuk.hdm-stuttgart.de/~df047/contact_confirm.html");
 
 /**
  * Created by PhpStorm.

@@ -105,13 +105,14 @@ else{
         </div>
         <div class="col-sm-4">
             <h3>Social Media</h3>
-            <a href="#" class="fa fa-facebook"></a>
-            <a href="#" class="fa fa-twitter"></a>
-            <a href="#" class="fa fa-google"></a>
-            <a href="#" class="fa fa-instagram"></a>
+            <a href="https://www.facebook.com/Infothunderstorm-194163804553989/" class="fa fa-facebook"></a>
+            <a href="https://www.twitter.com/thunderstorm_tw" class="fa fa-twitter"></a>
+            <a href="https://www.instagram.com/info.thunderstorm/" class="fa fa-instagram"></a>
         </div>
         <div class="col-sm-4">
-            <img id="footerimage" src="bilder/Thunderstorm_Teillogo.png">
+            <a href="index.html#">
+                <img id="footerimage" src="bilder/Thunderstorm_Teillogo.png">
+            </a>
         </div>
     </div>
 </footer>
