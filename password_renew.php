@@ -24,3 +24,7 @@ if ($passwort === NULL || $passwort == $passwort_wiederholen) {
     //$result= $stmt->execute(array('passwort'=> $hash,'user_id'=>$user_id));
     header("Location: https://mars.iuk.hdm-stuttgart.de/~df047/passwordreset_confirm.html");
 }
+else{
+    header("Location: https://mars.iuk.hdm-stuttgart.de/~df047/passwordwrong_renew.html");
+    exit();
+}

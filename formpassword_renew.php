@@ -35,7 +35,10 @@
 </nav>
 
 <div id = "startseite">
-        <div class="loginfeld">
+    <div class="container">
+        <div>
+            <div class="col-md-4"></div>
+            <div class="col-md-4" id="loginfeld">
         <?php
 require_once "logindaten.php";
 
@@ -139,8 +142,11 @@ if($resArray != null){
 
 
         ?>
+                <div class="col-md-4"></div>
     </div>
     </div>
+    </div>
+</div>
 
 
 

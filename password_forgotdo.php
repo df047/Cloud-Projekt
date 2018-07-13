@@ -40,8 +40,6 @@ catch (PDOException $p) {
 }
 
 
-
-
 try {
 
     $stmt = $db->prepare("SELECT * FROM users WHERE e_mail = :e_mail");  // Datenbankabfrage Verbereitung wird in $stmt gespeichert
@@ -70,7 +68,7 @@ if(count($row)==0) {
     //E-Mail für Benutzer, der das Passwort vergessen hat
     $empfaenger=$row['e_mail'];
     $absender="From: Thunderstorm GmbH <info.thunderstorm@mail.de>";
-    $betreff="Setzen Sie Ihr Passwort zurück";
+    $betreff="Setzen Sie Ihr Passwort zurueck";
     $url_passwortcode="https://mars.iuk.hdm-stuttgart.de/~df047/formpassword_renew.php?userid=".$row['id']."&code=".$passwortcode;
     $text="Hallo ".$row['vorname']." ".$row['nachname'].",".
     "Es wurde eine Änderung des Kennworts Ihres Thunderstorm-Kontos angefordert. Wenn Sie das waren, können Sie Ihr Passwort hier neu festlegen:"
