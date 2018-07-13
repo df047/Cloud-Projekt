@@ -33,7 +33,7 @@ while ($zeile = $query->fetchObject()) {
 
     exit();}
   else{
-    echo("Benutzername oder Passwort ungültig<br>");
-    die();
+    header("Location: https://mars.iuk.hdm-stuttgart.de/~df047/passwordwrong.html");
+      die();
 }
 ?>

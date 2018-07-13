@@ -1,7 +1,7 @@
 <?php
 session_start();
 if($_POST["username"]=='' OR $_POST["password"]== '' OR $_POST["email"]==''){
-    echo ("Geben Sie bitte alle Daten ein!");
+    header ("Location: https://mars.iuk.hdm-stuttgart.de/~df047/dataincomplete.html");
     die();
 }
 $username=$_POST["username"];
@@ -13,7 +13,7 @@ $nachname=$_POST["nachname"];
 $passwordconfirm=$_POST["passwordconfirm"];
 
 if ($password !== $passwordconfirm){
-    echo ("Wiederholen Sie das Passwort korrekt!");
+    header ("Location: https://mars.iuk.hdm-stuttgart.de/~df047/passwordwrong_register.html");
     die;
     }
 require_once "logindaten.php";
@@ -35,6 +35,6 @@ $stmt ->execute();
 
 echo("Sie haben sich erfolgreich registriert! Sie werden in 3 Sekunden auf die Startseite weitergeleitet");
 sleep(4);
-header("Location: https://mars.iuk.hdm-stuttgart.de/~df047/index.html");
+header("Location: https://mars.iuk.hdm-stuttgart.de/~df047/register_confirm.html");
 exit();
 ?>

@@ -20,7 +20,6 @@ $identificator= $_SESSION['user_id'];
 </head>
 
 <body>
-<div class="wrapper">
     <nav id="sidebar">
         <div class="sidebar-header">
             <button type="button" class="btn btn-outline-primary" id="upload" data-toggle="modal" data-target="#uploadmodal"><span class="glyphicon glyphicon-cloud-upload"></span>&emsp;Datei hochladen</button>
@@ -47,7 +46,7 @@ $identificator= $_SESSION['user_id'];
         </div>
         <ul class="list-group">
             <li><a href="https://mars.iuk.hdm-stuttgart.de/~df047/dashboard.php"><span class="glyphicon glyphicon-book"></span>&emsp;Meine Ablage</a></li>
-            <li><a href="https://mars.iuk.hdm-stuttgart.de/~df047/dashboardfreigegeben.php"><span class="glyphicon glyphicon-share-alt"></span>&emsp;Für mich freigegeben</a></li>
+            <li><a href="https://mars.iuk.hdm-stuttgart.de/~df047/sharedashboard.php"><span class="glyphicon glyphicon-share-alt"></span>&emsp;Für mich freigegeben</a></li>
             <li class="active"><a href="createfolder.php"><span class="glyphicon glyphicon-folder-open"></span>&emsp;Ordner</a> </li>
             <li><a href="favorite.php"><span class="glyphicon glyphicon-star"></span>&emsp;Favoriten</a></li>
             <!--<li><a href="trash.php"><span class="glyphicon glyphicon-trash"></span>&emsp;Papierkorb</a></li>-->
@@ -107,7 +106,11 @@ $identificator= $_SESSION['user_id'];
     </nav>
     <div id="content">
         <div class="active">
-
+            <div class="container">
+                <div class="row">
+                    <div class="überschrift">
+                        <div class="container">
+                            <div class="row">
             <?php
             require_once "logindaten.php";
 
@@ -122,7 +125,9 @@ $identificator= $_SESSION['user_id'];
             $query2  = $db ->prepare($sql2);
             $query2 ->execute();
             while ($zeile2 = $query2->fetchObject()) {
-                echo("<h1>" . "<span class='glyphicon glyphicon-folder-close'>&emsp;</span>"."$zeile2->folder_name" . "</h1><br>");
+                echo("<h2>" . "<span class='glyphicon glyphicon-folder-close'>&emsp;</span>"."$zeile2->folder_name" . "</h2></div>
+                </div>
+            </div><br>");
                 //Button zum hinzufügen von Dateien wird geladen, öffnet das Modal #newfile weiter unten
                 echo("<button type='button' class='btn' id='newfilebutton' data-toggle='modal' data-target='#newfile'>Datei hinzufügen</button><br><br>");
                 /*Um die einzelnen Dateien anzeigen zu lassen, wird der Filecode, der beschreibt welche
@@ -215,7 +220,10 @@ $identificator= $_SESSION['user_id'];
                                 </div>
         
                                </div>
-                            </div>");
+                            </div>
+                            <script>
+                 $('#movefilemodal".$i."').appendTo('body');
+                 </script>");
                         //Das sind die JQuery Skripte, die den Alert zum Löschen öffnen/schließen
                         echo("<script>
                         $('#question" . $i . "').click(function(){
@@ -272,6 +280,8 @@ $identificator= $_SESSION['user_id'];
 
                 </div>
             </div>
+                </div>
+            </div>
             <script>
                 $("#upload").click(function(){
                     $("#dateihochladen").toggle();
@@ -286,6 +296,8 @@ $identificator= $_SESSION['user_id'];
 
                 });
                 $('#uploadmodal').appendTo("body");
+                $('#newfile').appendTo('body');
+
             </script>
 </body>
 </html>

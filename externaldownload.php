@@ -35,8 +35,11 @@
 </nav>
 
 <div id = "startseite">
-    <div class="wrapper">
-        <div class="loginfeld" id="downloadarea">
+    <div class="container">
+        <div>
+            <div class="col-md-4"></div>
+            <div class="col-md-4" id="loginfeld">
+        <div id="downloadarea">
 <?php
 require_once "logindaten.php";
 
@@ -87,6 +90,8 @@ else{
 
 ?>
         </div>
+    </div>
+</div>
     </div>
 </div>
 

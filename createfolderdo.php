@@ -18,4 +18,7 @@ catch (PDOException $p) {
 $stmt = $db ->prepare("INSERT INTO folders (folder_id, owner, folder_name, file_code, access_code) VALUES('',$owner,:foldername,'','')");
 $stmt ->bindParam('foldername', $foldername);
 $stmt ->execute();
+
+header("Location: https://mars.iuk.hdm-stuttgart.de/~df047/dashboard.php");
+exit();
 ?>

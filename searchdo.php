@@ -18,7 +18,6 @@ if(!isset($_SESSION['user_id'])){
 </head>
 
 <body>
-<div class="wrapper">
     <nav id="sidebar">
         <div class="sidebar-header">
             <button type="button" class="btn btn-outline-primary" id="upload" data-toggle="modal" data-target="#uploadmodal"><span class="glyphicon glyphicon-cloud-upload"></span>&emsp;Datei hochladen</button>
@@ -45,7 +44,7 @@ if(!isset($_SESSION['user_id'])){
         </div>
         <ul class="list-group">
             <li class="active"><a href="https://mars.iuk.hdm-stuttgart.de/~df047/dashboard.php"><span class="glyphicon glyphicon-book"></span>&emsp;Meine Ablage</a></li>
-            <li><a href="https://mars.iuk.hdm-stuttgart.de/~df047/dashboardfreigegeben.php"><span class="glyphicon glyphicon-share-alt"></span>&emsp;Für mich freigegeben</a></li>
+            <li><a href="https://mars.iuk.hdm-stuttgart.de/~df047/sharedashboard.php"><span class="glyphicon glyphicon-share-alt"></span>&emsp;Für mich freigegeben</a></li>
             <li><a href="createfolder.php"><span class="glyphicon glyphicon-folder-open"></span>&emsp;Ordner</a> </li>
             <li><a href="favorite.php"><span class="glyphicon glyphicon-star"></span>&emsp;Favoriten</a></li>
             <!--<li><a href="trash.php"><span class="glyphicon glyphicon-trash"></span>&emsp;Papierkorb</a></li>-->
@@ -58,6 +57,11 @@ if(!isset($_SESSION['user_id'])){
             <div class="container-fluid">
 
                 <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
                     <a id="sidebarCollapse" href="#"><img class="logo" src="bilder/Thunderstorm_Teillogo.png"></a>
                 </div>
 
@@ -98,7 +102,15 @@ if(!isset($_SESSION['user_id'])){
             </div>
         </nav>
     <div id="content">
-        <div class="list-group">
+        <div class="container">
+            <div class="row">
+                <div class="überschrift">
+                    <h2>Suchergebnisse</h2>
+                </div>
+            </div>
+        </div><br>
+        <div class="container">
+            <div class="row">
             <?php
             $searchphrase=$_GET["search"];
             $owner=$_SESSION["user_id"];
@@ -115,6 +127,7 @@ if(!isset($_SESSION['user_id'])){
             $query  = $db ->prepare($sql);
             $query ->execute();
             while ($zeile = $query->fetchObject()) {
+                $file=$zeile->file_id;
                 echo("<div class='dropdown'>
                     <button class='btn btn-primary dropdown-toggle' type='button' data-toggle='dropdown'>");
                 echo("$zeile->filename"."."."$zeile->filetype");
@@ -127,12 +140,7 @@ if(!isset($_SESSION['user_id'])){
                 echo("$zeile->file_id"."'>");
                 echo("Download");
                 echo("</a>");
-                echo("<a href='https://mars.iuk.hdm-stuttgart.de/~df047/delete_file.php?filename=");
-                echo("$zeile->filename"."."."$zeile->filetype");
-                echo("&fileid=");
-                echo("$zeile->file_id"."'>");
-                echo("Löschen");
-                echo("</a>");
+                echo ("<a href='#' data-toggle='modal' data-target='#deletemodal"."$zeile->file_id"."'".">Löschen</a>");
                 echo("<a href='https://mars.iuk.hdm-stuttgart.de/~df047/favoritedo.php?filename=");
                 echo("$zeile->filename"."."."$zeile->filetype");
                 echo("&fileid=");
@@ -142,6 +150,30 @@ if(!isset($_SESSION['user_id'])){
                 echo("<li><a href='https://mars.iuk.hdm-stuttgart.de/~df047/accesswrite.php?fileid=".$zeile->file_id."'>Freigeben für...</a>");
                 echo("<li><a href='#' id='details' data-toggle='modal' data-target='#modal"."$zeile->file_id"."'".">Details</a>");
                 echo("</ul></div><br>");
+                echo ("<div class='modal fade' id='deletemodal"."$zeile->file_id"."'"." role='dialog'>
+            <div class='modal-dialog'>
+                <div class='modal-content'>
+                    <div class='modal-header'>
+                        <button type='button' class='close' data-dismiss='modal'>&times;</button>
+                        <h4 class='modal-title'>Bist du sicher, dass du die Datei löschen möchtest?</h4>
+                    </div>
+                    <div class='modal-footer'>
+                    <form action='delete_file.php' method='post'>
+                          <input hidden type='text' name='filename' value='".$zeile->filename."'>
+                           <input hidden type='text' name='filetype' value='".$zeile->filetype."'>
+                          <input hidden type='text' name='fileid' value='".$zeile->file_id."'>
+                          <input hidden type='text' name='owner' value='".$zeile->owner."'>
+                            <button type='button' class='btn btn-default' data-dismiss='modal'>Nein</button>
+                            <input type='submit' role='button' class='btn btn-primary' value='Ja'>
+                            </form>
+                            
+                    </div>
+                </div>
+            </div>
+        </div> 
+        <script>
+                 $('#deletemodal"."$zeile->file_id"."').appendTo('body');
+                 </script>");
                 echo("<!-- Modal -->
                     <div id=");
                 echo("'modal"."$zeile->file_id' "."class='modal fade' role='dialog'>");
@@ -179,7 +211,7 @@ if(!isset($_SESSION['user_id'])){
                     while ($zeile2 = $query2->fetchObject()) {
                         echo ($zeile2->username." - "."<button id='question".$i."' type='button' class='btn btn-primary'>Entfernen</button><br>");
 
-                        echo("<div  class='alert alert-danger' id='accessdeletebox".$i."'>
+                        echo("<div hidden class='alert alert-danger' id='accessdeletebox".$i."'>
                           <strong>Achtung</strong> Wollen sie diese Freigabe wirklich löschen?
                           <form action='accessdeletedo.php' method='post'>
                           <input hidden type='text' name='usertodelete' value='".$i."'>
@@ -197,6 +229,28 @@ if(!isset($_SESSION['user_id'])){
                         $i++;
                     }
                 }
+                echo("Für nicht registrierte Nutzer:<br>");
+                $sharedsql = "SELECT * FROM sharing WHERE file='$file'";
+                $sharedquery  = $db ->prepare($sharedsql);
+                $sharedquery ->execute();
+                $y=1;
+                while ($sharedzeile = $sharedquery->fetchObject()) {
+                    echo ($sharedzeile->non_user." - "."<button id='nuquestion".$y."' type='button' class='btn btn-primary'>Entfernen</button><br>");
+
+                    echo("<div style='display:none;' class='alert alert-danger' id='nuaccessdeletebox".$y."'>
+                          <strong>Achtung</strong> Wollen sie diese Freigabe wirklich löschen?
+                          <a href='https://mars.iuk.hdm-stuttgart.de/~df047/externaldelete.php?shareid=");
+                    echo($sharedzeile->share_id);
+                    echo("' class='btn btn-danger'>Ja</a>
+                       </div>
+                        ");
+                    echo("<script>
+                $(document).ready(function () {
+                        $('#nuquestion".$y."').click(function(){
+                            $('#nuaccessdeletebox".$y."').toggle();
+                        })});</script>");
+                    $y++;
+                }
                 echo("
             </div>
             <div class='modal-footer'>
@@ -205,7 +259,10 @@ if(!isset($_SESSION['user_id'])){
             
         </div>   
     </div>
-</div>");
+</div>
+<script>
+                 $('#modal"."$zeile->file_id"."').appendTo('body');
+                 </script>");
             }
 
             $owner=$_SESSION["user_id"];
@@ -231,14 +288,38 @@ if(!isset($_SESSION['user_id'])){
                 echo("<span class='caret'></span></button>
                 <ul class='dropdown-menu'>
                     ");
-                echo("<li><a href='https://mars.iuk.hdm-stuttgart.de/~df047/deletefolder.php?folderid=".$zeile3->folder_id."'>Löschen</a></li>");
-                //folderacceswrite erstellen
+                echo("<li><a href='#' data-toggle='modal' data-target='#deletemodal"."$zeile3->folder_id"."'".">Löschen</a></li>");
+                echo ("
+                <div class='modal fade' id='deletemodal"."$zeile3->folder_id"."'"." role='dialog'>
+                
+                            <div class='modal-dialog'>
+                                <div class='modal-content'>
+                                
+                                    <div class='modal-header'>
+                                        <button type='button' class='close' data-dismiss='modal'>&times;</button>
+                                        <h4 class='modal-title'>Bist du sicher, dass du den Ordner löschen möchtest?</h4>
+                                    </div>
+                                    
+                                    <div class='modal-footer'>
+                                        <form action='deletefolder.php' method='post'>
+                                              <input hidden type='text' name='folderid' value='".$zeile3->folder_id."'>
+                                              <button type='button' class='btn btn-default' data-dismiss='modal'>Nein</button>
+                                              <input type='submit' role='button' class='btn btn-primary' value='Ja'>
+                                        </form>     
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                </div>
+                 <script>
+                 $('#deletemodal"."$zeile3->folder_id"."').appendTo('body')
+                 </script>");
                 echo("<li><a href='https://mars.iuk.hdm-stuttgart.de/~df047/showfolder.php?folderid="."$zeile3->folder_id"."'>Anzeigen</a></li>");
                 echo("</ul></div><br>");}
             ?>
         </div>
+        </div>
     </div>
-</div>
 <script>
 $("#upload").click(function(){
     $("#dateihochladen").toggle();

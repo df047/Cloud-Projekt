@@ -44,8 +44,8 @@ if(!isset($_SESSION['user_id'])){
         </div>
         <ul class="list-group">
             <li><a href="https://mars.iuk.hdm-stuttgart.de/~df047/dashboard.php"><span class="glyphicon glyphicon-book"></span>&emsp;Meine Ablage</a></li>
-            <li><a href="https://mars.iuk.hdm-stuttgart.de/~df047/sharedashboard.php"><span class="glyphicon glyphicon-share-alt"></span>&emsp;Für mich freigegeben</a></li>
-            <li class="active"><a href="createfolder.php"><span class="glyphicon glyphicon-folder-open"></span>&emsp;Ordner</a> </li>
+            <li class="active"><a href="https://mars.iuk.hdm-stuttgart.de/~df047/sharedashboard.php"><span class="glyphicon glyphicon-share-alt"></span>&emsp;Für mich freigegeben</a></li>
+            <li><a href="createfolder.php"><span class="glyphicon glyphicon-folder-open"></span>&emsp;Ordner</a> </li>
             <li><a href="favorite.php"><span class="glyphicon glyphicon-star"></span>&emsp;Favoriten</a></li>
             <!--<li><a href="trash.php"><span class="glyphicon glyphicon-trash"></span>&emsp;Papierkorb</a></li>-->
 
@@ -58,7 +58,6 @@ if(!isset($_SESSION['user_id'])){
 
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
-                    <span class="sr-only">Toggle navigation</span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
@@ -107,36 +106,14 @@ if(!isset($_SESSION['user_id'])){
             <div class="container">
                 <div class="row">
                     <div class="überschrift">
-                        <h2>Meine Ordner <button id="ordnerbutton" class="btn btn-primary" data-toggle="modal" data-target="#createfolder" type="button">+</button></h2>
+                        <h2>Für mich freigegeben</h2>
                     </div>
                 </div>
             </div><br>
-            <div class="modal fade" id="createfolder" role="dialog">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                            <h4 class="modal-title">Neuer Ordner</h4>
-                        </div>
-                        <div class="modal-body">
-                            <form id="createfolder" action="createfolderdo.php" method="post">
-                                <input type="text" name="foldername" placeholder="Ordnername">
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">Schließen</button>
-                                    <button class="btn btn-primary" type="submit" value="Erstellen">Erstellen</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <script>
-                $('#createfolder').appendTo('body');
-            </script>
             <div class="container">
                 <div class="row">
             <?php
-            $owner=$_SESSION["user_id"];
+            $currentuser=$_SESSION["user_id"];
 
             require_once "logindaten.php";
 
@@ -147,68 +124,36 @@ if(!isset($_SESSION['user_id'])){
             catch (PDOException $p) {
                 echo("Fehler bei Aufbau der Datenbankverbindung.");
             }
-            $sql3 = "SELECT * FROM folders WHERE owner=$owner";
-            $query3  = $db ->prepare($sql3);
-            $query3 ->execute();
-            while ($zeile3 = $query3->fetchObject()) {
+            $sql = "SELECT * FROM files WHERE access_rights LIKE '%$currentuser%'";
+            $query  = $db ->prepare($sql);
+            $query ->execute();
+            while ($zeile = $query->fetchObject()) {
                 echo("<div class='dropdown'>
-                <button class='btn btn-primary dropdown-toggle' type='button' data-toggle='dropdown'>");
-                echo ("<span class='glyphicon glyphicon-folder-close'>&emsp;</span>");
-                echo("$zeile3->folder_name");
+                    <button class='btn btn-primary dropdown-toggle' type='button' data-toggle='dropdown'>");
+                echo("$zeile->filename"."."."$owner"."."."$zeile->filetype");
                 echo("<span class='caret'></span></button>
-                <ul class='dropdown-menu'>
-                    ");
-                echo("<li><a href='#' data-toggle='modal' data-target='#deletemodal"."$zeile3->folder_id"."'".">Löschen</a></li>");
-                echo ("
-                <div class='modal fade' id='deletemodal"."$zeile3->folder_id"."'"." role='dialog'>
-                
-                            <div class='modal-dialog'>
-                                <div class='modal-content'>
-                                
-                                    <div class='modal-header'>
-                                        <button type='button' class='close' data-dismiss='modal'>&times;</button>
-                                        <h4 class='modal-title'>Bist du sicher, dass du den Ordner löschen möchtest?</h4>
-                                    </div>
-                                    
-                                    <div class='modal-footer'>
-                                        <form action='deletefolder.php' method='post'>
-                                              <input hidden type='text' name='folderid' value='".$zeile3->folder_id."'>
-                                              <button type='button' class='btn btn-default' data-dismiss='modal'>Nein</button>
-                                              <input type='submit' role='button' class='btn btn-primary' value='Ja'>
-                                        </form>     
-                                    </div>
-                                    
-                                </div>
-                            </div>
-                </div>
-                 <script>
-                 $('#deletemodal"."$zeile3->folder_id"."').appendTo('body')
-                 </script>");
-                echo("<li><a href='https://mars.iuk.hdm-stuttgart.de/~df047/showfolder.php?folderid="."$zeile3->folder_id"."'>Anzeigen</a></li>");
-                echo("</ul></div><br>");}
+                    <ul class='dropdown-menu'>
+                        <li>");
+                echo("<a href='https://mars.iuk.hdm-stuttgart.de/~df047/download.php?filename=");
+                echo("$zeile->filename"."."."$zeile->filetype");
+                echo("&fileid=");
+                echo("$zeile->file_id"."'>");
+                echo("Download");
+                echo("</a>");
+                echo("</ul> - freigegeben von ");
+                $sql2 = "SELECT * FROM users WHERE id=$zeile->owner";
+                $query2  = $db ->prepare($sql2);
+                $query2 ->execute();
+                while ($zeile2 = $query2->fetchObject()) {
+                    echo($zeile2->username."</div>");
+                }
+
+            }
             ?>
         </div>
-    </div>
-<!-- Modal -->
-<div id="myModal" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-
-        <!-- Modal content-->
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">sergqer</h4>
-            </div>
-            <div class="modal-body">
-                <p>Some text in the modal.</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
         </div>
-
     </div>
-</div>
 <script>
     $("#upload").click(function(){
         $("#dateihochladen").toggle();
@@ -223,7 +168,6 @@ if(!isset($_SESSION['user_id'])){
 
     });
     $('#uploadmodal').appendTo("body");
-
 </script>
 </body>
 </html>

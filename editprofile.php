@@ -31,8 +31,7 @@ $id=$_GET["id"];
     </style>
 </head>
 
-<body>
-<div class="wrapper">
+<div>
     <nav id="sidebar">
         <div class="sidebar-header">
             <button type="button" class="btn btn-outline-primary" id="upload" data-toggle="modal" data-target="#uploadmodal"><span class="glyphicon glyphicon-cloud-upload"></span>&emsp;Datei hochladen</button>
@@ -59,7 +58,7 @@ $id=$_GET["id"];
         </div>
         <ul class="list-group">
             <li class="active"><a href="https://mars.iuk.hdm-stuttgart.de/~df047/dashboard.php"><span class="glyphicon glyphicon-book"></span>&emsp;Meine Ablage</a></li>
-            <li><a href="https://mars.iuk.hdm-stuttgart.de/~df047/dashboardfreigegeben.php"><span class="glyphicon glyphicon-share-alt"></span>&emsp;Für mich freigegeben</a></li>
+            <li><a href="https://mars.iuk.hdm-stuttgart.de/~df047/sharedashboard.php"><span class="glyphicon glyphicon-share-alt"></span>&emsp;Für mich freigegeben</a></li>
             <li><a href="createfolder.php"><span class="glyphicon glyphicon-folder-open"></span>&emsp;Ordner</a> </li>
             <li><a href="favorite.php"><span class="glyphicon glyphicon-star"></span>&emsp;Favoriten</a></li>
             <!--<li><a href="trash.php"><span class="glyphicon glyphicon-trash"></span>&emsp;Papierkorb</a></li>-->
@@ -73,7 +72,6 @@ $id=$_GET["id"];
 
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
-                    <span class="sr-only">Toggle navigation</span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
@@ -118,11 +116,86 @@ $id=$_GET["id"];
         </div>
     </nav>
     <div id="content">
-        <div class="active">
-            <div id="floatbox">
-            <div id="left" style="margin-right: 200px">
+            <div class="container">
+                <div class="row">
+                    <div class="überschrift">
+                        <h2>Mein Profil</h2>
+                    </div>
+                </div>
+            </div><br>
+            <div class="container">
+                <div class="row">
+                <?php
+                require_once "logindaten.php";
+
+                try
+                {
+                    $db= new PDO ($dsn,$dbuser,$dbpass);
+                }
+                catch (PDOException $p) {
+                    echo("Fehler bei Aufbau der Datenbankverbindung.");
+                }
+                $identificator= $_SESSION['user_id'];
+                $sql = "SELECT * FROM users WHERE id='$identificator'";
+                $query  = $db ->prepare($sql);
+                $query ->execute();
+                while ($zeile = $query->fetchObject()) {
+                echo ("<h2>$zeile->username &emsp;");
+                }
+            require_once "logindaten.php";
+
+            try
+            {
+                $db= new PDO ($dsn,$dbuser,$dbpass);
+            }
+            catch (PDOException $p) {
+                echo("Fehler bei Aufbau der Datenbankverbindung.");
+            }
+            $identificator= $_SESSION['user_id'];
+            $sql = "SELECT * FROM users WHERE id='$identificator'";
+            $query  = $db ->prepare($sql);
+            $query ->execute();
+            while ($zeile = $query->fetchObject()) {
+                echo("<img id='profilepicture' class='img-circle'  height='250' src='https://mars.iuk.hdm-stuttgart.de/~df047/profilepictures/");
+                echo("$zeile->profilepicture");
+                echo ("'></h2><br><br>");
+            }
+            ?>
+                <button type="button" class="btn btn-primary" id="picturechange" href="#">Profilbild ändern oder hochladen</button>
+                <form hidden id="profilbildhochladen" action="<?php
+                $identificator= $_SESSION['user_id'];
+                $sql = "SELECT * FROM users WHERE id='$identificator'";
+                $query  = $db ->prepare($sql);
+                $query ->execute();
+                while ($zeile = $query->fetchObject()) {
+
+                    echo ("changeprofilepicturedo.php");
+                };
+
+                ?>" method="post" enctype="multipart/form-data">
+                    Datei auswählen:
+                    <input type="file" name="uploadfile" id="uploadfile"><br>
+                    <input type="submit" value="Hochladen" name="submit"></form>
+                <script>
+                    $("#picturechange").click(function(){
+                        $("#profilbildhochladen").toggle();
+                    });
+                </script>
+            </div>
+        </div>
+    <div class="container">
+        <div class="row">
+            <div class="überschrift">
+                <h2>Meine Kontaktdaten</h2>
+            </div>
+        </div>
+    </div><br>
+    <div class="container">
+        <div class="row">
+                <div>
         <form action="updatedo.php" method="post">
-            <h1>Vorname</h1><input type="text" name="vorname" value="<?php
+            <div class="form-group col-sm-8" >
+                <label class="control-label">Vorname</label><input type="text" name="vorname" class="form-control" value="<?php
             require_once "logindaten.php";
 
             try
@@ -139,8 +212,9 @@ $id=$_GET["id"];
             while ($zeile = $query->fetchObject()) {
                 echo ($zeile->vorname);
             }
-            ?>"><br>
-            <h1>Nachname</h1><input type="text" name="nachname" value="<?php
+            ?>"></div><br>
+            <div class="form-group col-sm-8">
+            <label class="control-label">Nachname</label><input type="text" name="nachname" class="form-control" value="<?php
                 require_once "logindaten.php";
 
                 try
@@ -157,8 +231,9 @@ $id=$_GET["id"];
                 while ($zeile = $query->fetchObject()) {
                     echo ($zeile->nachname);
                 }
-                ?>"><br>
-            <h1>E-Mail Adresse</h1><input type="text" name="email" value="<?php
+                ?>"></div><br>
+                <div class="form-group col-sm-8">
+            <label class="control-label">E-Mail Adresse</label><input type="text" name="email" class="form-control" value="<?php
             require_once "logindaten.php";
 
             try
@@ -175,7 +250,7 @@ $id=$_GET["id"];
             while ($zeile = $query->fetchObject()) {
                 echo ($zeile->e_mail);
             }
-            ?>"><br>
+                    ?>"></div><br><br><br><br><br><br><br><br><br>
             <input type="text" name="id" value="<?php
             require_once "logindaten.php";
 
@@ -194,55 +269,14 @@ $id=$_GET["id"];
                 echo ($zeile->id);
             }
             ?>" hidden><br>
-            <input type="submit" value="Profildaten ändern">
+            <input type="submit" role="button" class="btn btn-primary" value="Profildaten ändern">
         </form>
+                </div>
             </div>
-            <div id="right">
-            <?php
-            require_once "logindaten.php";
-
-            try
-            {
-                $db= new PDO ($dsn,$dbuser,$dbpass);
-            }
-            catch (PDOException $p) {
-                echo("Fehler bei Aufbau der Datenbankverbindung.");
-            }
-            $identificator= $_SESSION['user_id'];
-            $sql = "SELECT * FROM users WHERE id='$identificator'";
-            $query  = $db ->prepare($sql);
-            $query ->execute();
-            while ($zeile = $query->fetchObject()) {
-                echo("<img id='profilepicture' class='img-circle'  height='450' src='https://mars.iuk.hdm-stuttgart.de/~df047/profilepictures/");
-                echo("$zeile->profilepicture");
-                echo ("'><br><br>");
-            }
-            ?>
-        <button type="button" class="btn btn-outline-primary" id="picturechange" href="#">Profilbild ändern oder hochladen</button>
-        <form hidden id="profilbildhochladen" action="<?php
-        $identificator= $_SESSION['user_id'];
-        $sql = "SELECT * FROM users WHERE id='$identificator'";
-        $query  = $db ->prepare($sql);
-        $query ->execute();
-        while ($zeile = $query->fetchObject()) {
-
-                 echo ("changeprofilepicturedo.php");
-             };
-
-             ?>" method="post" enctype="multipart/form-data">
-            Datei auswählen:
-            <input type="file" name="uploadfile" id="uploadfile"><br>
-            <input type="submit" value="Hochladen" name="submit"></form>
-            <script>
-                $("#picturechange").click(function(){
-                    $("#profilbildhochladen").toggle();
-                });
-            </script>
-            </div>
-            </div>
-    </div>
     </div>
 </div>
+</div>
+
         <script>
         $("#upload").click(function(){
             $("#dateihochladen").toggle();

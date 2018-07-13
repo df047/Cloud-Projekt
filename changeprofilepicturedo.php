@@ -87,5 +87,3 @@ if (!move_uploaded_file($_FILES["uploadfile"]["tmp_name"], "/home/df047/public_h
 sleep(3);
 header("Location: https://mars.iuk.hdm-stuttgart.de/~df047/showprofile.php");
 exit();
-
-// Löschen des alten Profilbildes auf dem Server

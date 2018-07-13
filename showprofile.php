@@ -18,7 +18,6 @@ if(!isset($_SESSION['user_id'])){
 </head>
 
 <body>
-<div class="wrapper">
     <nav id="sidebar">
         <div class="sidebar-header">
             <button type="button" class="btn btn-outline-primary" id="upload" data-toggle="modal" data-target="#uploadmodal"><span class="glyphicon glyphicon-cloud-upload"></span>&emsp;Datei hochladen</button>
@@ -45,7 +44,7 @@ if(!isset($_SESSION['user_id'])){
         </div>
         <ul class="list-group">
             <li><a href="https://mars.iuk.hdm-stuttgart.de/~df047/dashboard.php"><span class="glyphicon glyphicon-book"></span>&emsp;Meine Ablage</a></li>
-            <li><a href="https://mars.iuk.hdm-stuttgart.de/~df047/dashboardfreigegeben.php"><span class="glyphicon glyphicon-share-alt"></span>&emsp;Für mich freigegeben</a></li>
+            <li><a href="https://mars.iuk.hdm-stuttgart.de/~df047/sharedashboard.php"><span class="glyphicon glyphicon-share-alt"></span>&emsp;Für mich freigegeben</a></li>
             <li><a href="createfolder.php"><span class="glyphicon glyphicon-folder-open"></span>&emsp;Ordner</a> </li>
             <li><a href="favorite.php"><span class="glyphicon glyphicon-star"></span>&emsp;Favoriten</a></li>
             <!--<li><a href="trash.php"><span class="glyphicon glyphicon-trash"></span>&emsp;Papierkorb</a></li>-->
@@ -104,9 +103,15 @@ if(!isset($_SESSION['user_id'])){
         </div>
     </nav>
     <div id="content">
-        <div id="floatbox">
-            <div id="left" style="margin-right: 200px">
-        <h1>Mein Profil</h1><br>
+        <div class="container">
+            <div class="row">
+                <div class="überschrift">
+                    <h2>Mein Profil</h2>
+                </div>
+            </div>
+        </div><br>
+        <div class="container">
+            <div class="row">
         <?php
         require_once "logindaten.php";
 
@@ -122,29 +127,32 @@ if(!isset($_SESSION['user_id'])){
         $query  = $db ->prepare($sql);
         $query ->execute();
         while ($zeile = $query->fetchObject()) {
-            echo ("<h2>$zeile->username</h2><br>");
-            echo ("<h1>Meine Kontaktdaten</h1><br>
+            echo ("<h2>$zeile->username &emsp; <img id='profilepicture' class='img-circle' height='250px' src='https://mars.iuk.hdm-stuttgart.de/~df047/profilepictures/");
+            echo("$zeile->profilepicture");
+            echo ("' </h2><br>");
+            echo ("<div class=\"container\">
+            <div class=\"row\">
+                <div class=\"überschrift\">
+                    <h2>Meine Kontaktdaten</h2>
+                </div>
+            </div>
+        </div><br>
                     <h3>Vorname:<br></h3>
                     $zeile->vorname<br>
                     <h3>Nachname:<br></h3>
                     $zeile->nachname<br>
                     <h3>Email-Adresse:<br></h3>
-                    $zeile->e_mail<br><br><br>");
+                    $zeile->e_mail &emsp;&emsp;");
             echo("<a class='btn btn-primary' href='");
             echo("https://mars.iuk.hdm-stuttgart.de/~df047/editprofile.php?id=".$zeile->id."'>Ändern</a>
-                    </div>");
-            echo ("<div id='right'>
-                    <h3>Profilbild</h3><br>
-                    <img id='profilepicture' class='img-circle' height='450px' src='https://mars.iuk.hdm-stuttgart.de/~df047/profilepictures/");
-            echo("$zeile->profilepicture");
-            echo ("'><br></div></div>");
+                  </div)</div> </div> ");
 
         }
         ?>
-
+            </div>
     </div>
-</div>
-<script>
+    </div>
+    <script>
     $("#upload").click(function(){
         $("#dateihochladen").toggle();
     });

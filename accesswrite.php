@@ -1,11 +1,31 @@
 <?php
+//Check ob der benutzer angemeldet ist
 session_start();
 if(!isset($_SESSION['user_id'])){
     header("Location: https://mars.iuk.hdm-stuttgart.de/~df047/logout.php");
     exit();
 }
+$currentuser=$_SESSION["user_id"];
 $file=$_GET["fileid"];
 //check ob benutzer auch owner dieser file id ist.
+require_once "logindaten.php";
+
+    try {
+    $db = new PDO ($dsn, $dbuser, $dbpass);
+    }
+    catch (PDOException $p) {
+    echo("Fehler bei Aufbau der Datenbankverbindung.");
+    }
+
+$checksql = "SELECT * FROM files WHERE file_id='$file'";
+$checkquery = $db->prepare($checksql);
+$checkquery->execute();
+    while ($checkzeile=$checkquery->fetchobject()) {
+        if ($checkzeile->owner != $currentuser) {
+            header("Location: https://mars.iuk.hdm-stuttgart.de/~df047/logout.php");
+            exit();
+            }
+        }
 
 ?>
 <!DOCTYPE html>
@@ -21,7 +41,6 @@ $file=$_GET["fileid"];
 </head>
 
 <body>
-<div class="wrapper">
     <nav id="sidebar">
         <div class="sidebar-header">
             <button type="button" class="btn btn-outline-primary" id="upload" data-toggle="modal" data-target="#uploadmodal"><span class="glyphicon glyphicon-cloud-upload"></span>&emsp;Datei hochladen</button>
@@ -49,7 +68,7 @@ $file=$_GET["fileid"];
         <ul class="list-group">
             <div  class="active"></div>
             <li><a href="https://mars.iuk.hdm-stuttgart.de/~df047/dashboard.php"><span class="glyphicon glyphicon-book"></span>&emsp;Meine Ablage</a></li>
-            <li><a href="https://mars.iuk.hdm-stuttgart.de/~df047/dashboardfreigegeben.php"><span class="glyphicon glyphicon-share-alt"></span>&emsp;Für mich freigegeben</a></li>
+            <li><a href="https://mars.iuk.hdm-stuttgart.de/~df047/sharedashboard.php"><span class="glyphicon glyphicon-share-alt"></span>&emsp;Für mich freigegeben</a></li>
             <li><a href="createfolder.php"><span class="glyphicon glyphicon-folder-open"></span>&emsp;Ordner</a> </li>
             <li><a href="favorite.php"><span class="glyphicon glyphicon-star"></span>&emsp;Favoriten</a></li>
             <!--<li><a href="trash.php"><span class="glyphicon glyphicon-trash"></span>&emsp;Papierkorb</a></li>-->
@@ -108,7 +127,9 @@ $file=$_GET["fileid"];
         </div>
     </nav>
     <div id="content">
-        <form action="accesswritedo.php" method="post">
+        <div class="container">
+            <div class="row">
+        <form action="accesswritedo.php" method="post"><br><br>
             <p>Bitte gib hier die E-Mail-Adresse des Nutzers ein, für den die Datei freigegeben werden soll.</p><br>
             <p>Falls der Nutzer nicht bei Thunderstorm registriert sein sollte,<br>
                 wird ein Link an diese Email-Adresse geschickt, damit die Person Zugriff auf die Datei erhält.</p><br>
@@ -117,7 +138,8 @@ $file=$_GET["fileid"];
             <input type="submit" value="Freigeben">
         </form>
     </div>
-</div>
+        </div>
+    </div>
 <script>
     $("#upload").click(function(){
         $("#dateihochladen").toggle();
