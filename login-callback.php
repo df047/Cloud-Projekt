@@ -14,13 +14,12 @@ try {
 }
 
 if (isset($accessToken)) {
-    // Logged in!
+
     $_SESSION['facebook_access_token'] = header("Location:mars.iuk.hdm-stuttgart.de/~df047/dashboard.php"). $accessToken;
 
-    // Now you can redirect to another page and use the
-    // access token from $_SESSION['facebook_access_token']
+
 } elseif ($helper->getError()) {
-    // The user denied the request
+
     exit;
 }
 
