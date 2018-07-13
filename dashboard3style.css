@@ -22,6 +22,8 @@ body {
     border-right: solid;
     border-width: thin;
     border-color: #C0C0C0;
+    margin-left: 0px;
+    z-index:2;
 }
 a, a:hover {
     text-decoration: none;
@@ -53,7 +55,7 @@ a, a:hover {
 }
 
 #navi ul li.active {
-    background-color: #ECECEC;
+    background-color: #D3D3D3;
     color: #060076;
 }
 
@@ -78,6 +80,8 @@ color: #2e2e2e;
     background-color: #D3D3D3;
 }
 
+
+
 #upload {
     background-color: #DCDCDC;
     font-size: medium;
@@ -92,12 +96,14 @@ color: #2e2e2e;
 }
 
 #content {
-    position: absolute;
-    margin-left: 250px;
+    position: relative;
+    margin-left: 2%;
     padding: 20px;
     padding-top: 0px;
     transition: all 0.3s;
     width: auto;
+    display: table;
+    z-index:0;
 }
 
 #sidebar.active {
@@ -108,9 +114,7 @@ color: #2e2e2e;
     padding: 7px;
 }
 
-#content.active {
-    margin-left: 0px;
-}
+
 #floatbox{
     display: flex;
     flex-direction: row;
@@ -129,6 +133,7 @@ color: #2e2e2e;
     background-color:#DCDCDC ;
     color: black;
     border:none;
+    text-align: right;
 }
 
 #newfilebutton {
@@ -153,6 +158,29 @@ color: #2e2e2e;
     background-color: #D3D3D3;
 }
 
-.btn-primary:focus{
+.btn btn-primary:active{
     background-color: #080099;
+}
+
+.überschrift {
+    border-bottom: solid;
+    border-color: lightgrey;
+    border-width: thin;
+    width: 100%;
+}
+
+
+@media (max-width: 1024px) {
+    #sidebar {
+        margin-left: -250px;
+    }
+    #sidebar.active {
+        margin-left: 0;
+    }
+}
+
+@media (min-width: 1024px) {
+    #content {
+        margin-left: 250px;
+    }
 }

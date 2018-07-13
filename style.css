@@ -39,8 +39,8 @@ body {
     display: table;
     position: relative;
     width: 100%;
-    background-size: cover;
-    padding: 80px
+    padding-top: 3%;
+    padding-bottom: 2%;
 }
 
 #Contact
@@ -71,46 +71,35 @@ body {
 }
 
 #startseite {
-    background: url(bilder/Startbild_1.jpg) repeat center center fixed;
-    display: table;
+    background: url(bilder/Startbild_1.jpg)  repeat center center fixed;
     height: 100%;
+    background-size: cover;
+    display: table;
     position: relative;
     width: 100%;
-    background-size: cover;
 }
 
-.landing-text {
-    display: table-cell;
-    text-align: center;
-    vertical-align: middle;
-}
-
-.landing-text h1 {
-    font-size: 500%;
-    font-weight: 700;
-}
 
 
 .Leo {
-    width: 100%;
-    padding-left: 0%;
-    padding-top: 15%;
+    padding-top: 20px;
+    width: 200px;
 }
 
 #register {
-    background: url("bilder/desk-3139127_1920.jpg")no-repeat center center fixed;
-    display: table;
+    background: url("bilder/desk-3139127_1920.jpg") no-repeat center center fixed;
     height: 100%;
+    background-size: cover;
+    display: table;
     position: relative;
     width: 100%;
-    background-size: cover;
-}
+    }
 
 
 footer {
     width: 100%;
     background-color:rgba(255, 255, 255,0.9);
-    padding:3% 5% 3% 5%;
+    padding:3% 3%;
     color: #000000;
 ;
 }
@@ -131,7 +120,6 @@ footer {
 
 
 .form-signin {
-    max-width: 420px;
     padding-top: 30px;
     padding-left: 38px;
     padding-right: 38px;
@@ -147,7 +135,6 @@ footer {
     position: relative;
     font-size: 16px;
     height: auto;
-    padding: 10px;
 }
 
 
@@ -157,9 +144,11 @@ footer {
  }
 
  #logintext {
-     margin-left: 16%;
+     margin-left: auto;
+     margin-right: auto;
      color: rgba(80,80,80,1);
      font-style: italic;
+     text-align: center;
  }
 
  #password_forgot {
@@ -187,9 +176,7 @@ footer {
     background-color: #080099;
 }
 
-.loginfeld {
-    max-width: 420px;
-    margin: 0 auto;
+#loginfeld {
     background-color: rgba(224, 224, 224, 0.7);
     margin-top: 180px;
 }
@@ -197,8 +184,6 @@ footer {
 
 
 #registerbutton {
-    margin-left: 3%;
-    margin-top: 5%;
     background-color: #060076;
 }
 
@@ -257,4 +242,12 @@ footer {
     margin: 0 auto;
     background-color: rgba(224, 224, 224, 0.7);
     margin-top: 320px;
+}
+
+.form-register {
+    margin: 0 auto;
+}
+
+#weiter {
+    background-color: #060076;
 }
